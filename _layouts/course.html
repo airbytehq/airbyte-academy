@@ -4,12 +4,12 @@ layout: default
 
 <h2>{{ page.title }}</h2>
 <ul>
-    {% assign course_lessons = site.courses | where_exp: "lesson", "lesson.path
-    contains page.dir" %} {% for lesson in course_lessons %}
+    {% for lesson in site.courses %} {% if lesson.dir == page.dir and
+    lesson.name != 'index.md' %}
     <li>
         <a href="{{ lesson.url | relative_url }}">{{ lesson.title }}</a>
     </li>
-    {% endfor %}
+    {% endif %} {% endfor %}
 </ul>
 
 <h2>Debugging Lessons</h2>
