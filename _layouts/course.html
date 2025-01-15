@@ -11,3 +11,16 @@ layout: default
     </li>
     {% endfor %}
 </ul>
+
+<h2>Debugging Lessons</h2>
+<ul>
+    {% for doc in site.courses %}
+    <li>
+        <strong>{{ doc.title }}</strong><br />
+        dir: {{ doc.dir }}<br />
+        path: {{ doc.path }}<br />
+        layout: {{ doc.layout }}<br />
+        name: {{ doc.name }}<br />
+    </li>
+    {% endfor %}
+</ul>
