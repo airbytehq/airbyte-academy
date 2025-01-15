@@ -1,10 +1,14 @@
-lsi: false
-safe: true
-source: /docs
-incremental: false
-highlighter: rouge
-gist:
-  noscript: false
-kramdown:
-  math_engine: mathjax
-  syntax_highlighter: rouge
+title: My Courses Site
+description: >
+  A simple course directory site built with Jekyll.
+theme: minima # or remove and use your own custom CSS
+# Collections
+collections:
+  courses:
+    output: true
+    permalink: /courses/:path/
+
+# Exclude stuff we don't want processed
+exclude:
+  - Gemfile
+  - Gemfile.lock

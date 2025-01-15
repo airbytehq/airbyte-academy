@@ -1,0 +1,13 @@
+---
+layout: default
+---
+
+<h2>{{ page.title }}</h2>
+<ul>
+    {% assign course_lessons = site.courses | where_exp: "lesson", "lesson.path
+    contains page.dir" %} {% for lesson in course_lessons %}
+    <li>
+        <a href="{{ lesson.url | relative_url }}">{{ lesson.title }}</a>
+    </li>
+    {% endfor %}
+</ul>

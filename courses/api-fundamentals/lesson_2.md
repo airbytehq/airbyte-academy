@@ -1,8 +1,8 @@
 ---
 layout: lesson
-title: Lesson 1 - Introduction to APIs
+title: Lesson 2 - Building a Simple API
 ---
 
-## What is an API?
+## Setting up Your Environment
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit...
