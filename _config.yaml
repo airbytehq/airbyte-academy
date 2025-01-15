@@ -1,7 +1,7 @@
 title: Airbyte Academy
 description: >
   Content used in Airbyte Academy Courses.
-theme: minima # or remove and use your own custom CSS
+
 # Collections
 collections:
   courses:
