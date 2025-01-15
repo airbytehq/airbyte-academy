@@ -1,6 +1,6 @@
-title: My Courses Site
+title: Airbyte Academy
 description: >
-  A simple course directory site built with Jekyll.
+  Content used in Airbyte Academy Courses.
 theme: minima # or remove and use your own custom CSS
 # Collections
 collections:

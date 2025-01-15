@@ -3,7 +3,7 @@ layout: default
 title: Home
 ---
 
-# Available Courses
+# Airbyte Academy
 
 <ul>
   {% for course in site.courses %}
