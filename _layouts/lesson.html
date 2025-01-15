@@ -4,11 +4,18 @@ layout: default
 
 <article>
     <h2>{{ page.title }}</h2>
-    <div class="lesson-content">{{ content }}</div>
+    <main>{{ content }}</main>
 </article>
 
 <nav>
-    <a href="{{ page.dir | prepend: '/courses' | relative_url }}">
+    <a
+        href="{% comment %} remove '_courses' from the dir first {% endcomment %}
+            {{ page.dir
+               | remove_first: '_courses'
+               | prepend: '/courses'
+               | relative_url
+            }}"
+    >
         Back to {{ page.dir | split: '/' | last }}
     </a>
 </nav>
