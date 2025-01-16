@@ -6,7 +6,7 @@ tags: [onboarding,lms]
 ---
 
 # Build an AI Chatbot
-CC
+
 ## Overview 
 Duration: 0:02:00
 From chatbots to large language models it seems AI is everywhere. Developer tools and platforms are moving at an incredible pace making it possible for anyone with some coding skills to build highly complex AI-driven apps in a short amount of time. At the heart of any AI application is access to the right data. The Airbyte platform is a core aspect of building the right AI data stack to unlock data, whether it is structured or unstructed and make it available for AI use cases.   
