@@ -2,6 +2,8 @@ title: Airbyte Academy
 description: >
   Content used in Airbyte Academy Courses.
 
+theme: minimal-mistakes
+
 # Collections
 collections:
   courses:
