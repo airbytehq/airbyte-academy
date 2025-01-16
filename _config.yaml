@@ -21,6 +21,7 @@ kramdown:
   entity_output: as_char
   toc_levels: 1..6
   smart_quotes: lsquo,rsquo,ldquo,rdquo
+  syntax_highlighter: rouge
   enable_coderay: false # Make sure this is false if you are using Rouge
 
 highlighter: rouge
