@@ -16,6 +16,8 @@ exclude:
   - Gemfile.lock
 
 markdown: kramdown
+highlighter: rouge
+
 kramdown:
   input: GFM # Enables GitHub Flavored Markdown
   hard_wrap: false
@@ -26,7 +28,6 @@ kramdown:
   syntax_highlighter: rouge
   enable_coderay: false # Make sure this is false if you are using Rouge
 
-highlighter: rouge
 rouge:
   enabled: true
   guess_lang: true
