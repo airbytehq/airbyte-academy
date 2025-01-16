@@ -2,8 +2,6 @@ title: Airbyte Academy
 description: >
   Content used in Airbyte Academy Courses.
 
-theme: jerkyll-theme-chirpy
-
 # Collections
 collections:
   courses:
