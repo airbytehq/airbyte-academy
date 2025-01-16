@@ -6,5 +6,5 @@ header {
 
 .markdown-body>*:first-child {
     margin-top: 0 !important;
-    display: none
+    display: none;
 }
