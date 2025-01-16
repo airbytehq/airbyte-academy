@@ -12,3 +12,7 @@ collections:
 exclude:
   - Gemfile
   - Gemfile.lock
+
+markdown: kramdown
+highlighter: rouge
+    input: GFM
