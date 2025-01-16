@@ -27,6 +27,5 @@ kramdown:
 highlighter: rouge
 rouge:
   enabled: true
-  guess_lang: false
-  # You can set a theme such as:
-  theme: monokai
+  guess_lang: true
+  theme: gruvbox.dark
