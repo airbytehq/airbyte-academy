@@ -1,4 +1,15 @@
-# Course Index
+# Using Airbyte Platform APIs to Build Data Pipelines
+
+- [Chapter 1: Intro](api-fundamentals/chapter_1.md)
+- [Chapter 2: Pre-reqs (Q)](api-fundamentals/chapter_2.md)
+- [Chapter 3: Using the Airbyte API with Postman](api-fundamentals/chapter_3.md)
+- [Chapter 4: Generate the Access Token](api-fundamentals/chapter_4.md)
+- [Chapter 5: Using the Python Airbyte API SDK](api-fundamentals/chapter_5.md)
+- [Chapter 6: Create Client Credentials](api-fundamentals/chapter_6.md)
+- [Chapter 7: Initiate the API](api-fundamentals/chapter_7.md)
+- [Chapter 8: Making our first request using Python SDK](api-fundamentals/chapter_8.md)
+
+# AI Chatbot
 
 - [Chapter 1: Overview](ai-chatbot/chapter_1.md)
 - [Chapter 2: Pre-requisites](ai-chatbot/chapter_2.md)

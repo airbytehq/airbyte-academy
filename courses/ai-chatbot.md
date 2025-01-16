@@ -1,10 +1,3 @@
----
-title: Build an AI Chatbot
-
-tags: [onboarding,lms]
-
----
-
 # Build an AI Chatbot
 
 ## Overview 

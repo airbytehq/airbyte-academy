@@ -101,7 +101,7 @@ def split_markdown(input_file, output_folder):
 
 if __name__ == "__main__":
     # Example usage:
-    input_md = "courses/ai-chatbot.md"
+    input_md = "courses/api-fundamentals.md"
     output_dir = "docs"
     split_markdown(input_md, output_dir)
     print("Done! Check the 'output' folder for results.")
