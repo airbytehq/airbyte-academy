@@ -1,10 +1,7 @@
 @import "{{ site.theme }}";
 
-header {
-  display: none;
-}
-
 .markdown-body>*:first-child {
     margin-top: 0 !important;
+    color: green;
     display: none;
 }
