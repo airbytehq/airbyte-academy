@@ -14,7 +14,7 @@ exclude:
   - Gemfile.lock
 
 markdown: kramdown
-highlighter: rouge
+# highlighter: rouge
 
 kramdown:
   input: GFM # Enables GitHub Flavored Markdown
@@ -23,11 +23,11 @@ kramdown:
   entity_output: as_char
   toc_levels: 1..6
   smart_quotes: lsquo,rsquo,ldquo,rdquo
-  highlighter: rouge
-  syntax_highlighter: rouge
+  # highlighter: rouge
+  # syntax_highlighter: rouge
   enable_coderay: false # Make sure this is false if you are using Rouge
 
-rouge:
-  enabled: true
-  guess_lang: true
-  theme: gruvbox.dark
+# rouge:
+#   enabled: true
+#   guess_lang: true
+#   theme: gruvbox.dark
