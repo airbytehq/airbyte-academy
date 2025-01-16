@@ -14,5 +14,18 @@ exclude:
   - Gemfile.lock
 
 markdown: kramdown
+kramdown:
+  input: GFM # Enables GitHub Flavored Markdown
+  hard_wrap: false
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false # Make sure this is false if you are using Rouge
+
 highlighter: rouge
-    input: GFM
+rouge:
+  enabled: true
+  guess_lang: false
+  # You can set a theme such as:
+  theme: monokai
