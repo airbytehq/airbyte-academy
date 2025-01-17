@@ -1,7 +1,8 @@
+---
+---
+@import "{{ site.theme }}";
+
 .markdown-body>*:first-child {
     margin-top: 0 !important;
     display: none;
 }
-
-@import "{{ site.theme }}";
-
