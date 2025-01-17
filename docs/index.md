@@ -1,3 +1,7 @@
+--
+layout: default
+--
+
 # Using Airbyte Platform APIs to Build Data Pipelines
 
 - [Chapter 1: Intro](api-fundamentals/chapter_1.md)
