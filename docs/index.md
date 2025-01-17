@@ -1,6 +1,7 @@
---
+---
 layout: default
---
+title: index
+---
 
 # Using Airbyte Platform APIs to Build Data Pipelines
 
