@@ -37,7 +37,7 @@ def split_markdown(input_file, output_folder):
     def write_chapter(ch_num, ch_title, ch_lines):
         """Write the collected lines for a chapter to a new file."""
         # Example file name: chapter_1.md, chapter_2.md, etc.
-        chapter_filename = f"chapter_{ch_num}.md"
+        chapter_filename = f"lesson_{ch_num}.md"
         chapter_path = os.path.join(output_subfolder, chapter_filename)
 
         with open(chapter_path, "w", encoding="utf-8") as outfile:
@@ -95,7 +95,7 @@ def split_markdown(input_file, output_folder):
 
             # Example: `- [Chapter 1: Some Title](my_course/chapter_1.md)`
             index_file.write(
-                f"- [Chapter {ch_num}: {ch_title}]({base_name}/{ch_filename})\n"
+                f"- [Lesson {ch_num}: {ch_title}]({base_name}/{ch_filename})\n"
             )
 
 
