@@ -25,7 +25,7 @@
 - [Lesson 12: Bonus: Create a Front End, Next.js](docs/ai-chatbot/lesson_12.md)
 - [Lesson 13: Next Steps](docs/ai-chatbot/lesson_13.md)
 
-# 
+# How to add New Course to Thinkific using Hackmd
 
 - [Lesson 1: Lesson 1](docs/new-course/lesson_1.md)
 - [Lesson 2: You don't need to say Lesson X here](docs/new-course/lesson_2.md)
