@@ -1,5 +1,4 @@
 ## Create Source Connector & Streams
-Duration: 0:10:00
 
 At this point, we have know the source of the data (stripe) and where we want to move the data, or destination (postgres on supabase). It is time to move the data. For this, we will use the Airbyte Cloud platform. To get started, you will need access to your [Airbyte credentials](https://cloud.airbyte.com/signup?utm_campaign=TDD_Search_Brand_USA&utm_source=adwords&utm_term=airbyte%20cloud&_gl=1*v7yfqs*_gcl_aw*R0NMLjE3MzQ5ODcwNDAuQ2owS0NRaUFzYVM3QmhEUEFSSXNBQVg1Y1NBOEFiMXd5RE45YzNOVFRRYU04ODNHdU5VRDBwV2RyUXlrYWp0OWI0WGJrMVNSQnRpUGpOa2FBakdrRUFMd193Y0I.*_gcl_au*OTc3Mjg2MDc0LjE3MzA4NDY2MjIuNDg2MzQ0NDM3LjE3MzIwNTI0ODAuMTczMjA1MjQ3OQ..//), and we will establish our connection first. 
 

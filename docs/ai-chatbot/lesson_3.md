@@ -1,5 +1,4 @@
 ## A Quick AI Terminology Primer
-Duration: 0:05:00
 
 There are a lot of new terms when working with AI. They can be overwhelming, but they don't have to be. Here is a quick primer on the most important things you need to understand. Throughout this tutorial, you will apply many of these techniques in your app. 
 

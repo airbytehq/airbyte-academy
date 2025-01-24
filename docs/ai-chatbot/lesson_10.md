@@ -1,5 +1,5 @@
 ## Create Database Functions
-Duration: 0:10:00
+
 At this stage, you should have your Stripe data sync'ed into the public schema running in Supabase. You will have three tables corresponding to the streams you set up in Airbyte. You will also notice that, thanks to the PGVector connector an embeddings column has automatically been created and populated for you. We are going to use this to perform a similarity search via openAI and your chatbot.
 
 ![CleanShot 2024-12-23 at 12.26.28](https://hackmd.io/_uploads/SJjtvSwHyl.png)

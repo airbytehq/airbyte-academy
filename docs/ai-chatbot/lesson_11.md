@@ -1,5 +1,4 @@
 ## The AI Chatbot
-Duration: 0:20:00
 
 You will create the AI chatbot in Python. To make things simple, we will use a Google Collab notebook. You can think of this as an online IDE. Go ahead and navigate to [Google Collab](https://colab.research.google.com/) and create a new notebook called airbyteai. If you would prefer to follow along, here is [a completed notebook](https://colab.research.google.com/drive/1B8QXrUGPi5JvjOwVREoGdAK72AJyU5fy#scrollTo=HVDlskc0S6ry) for you.
 
@@ -59,14 +58,14 @@ Just like we did with Supabase, we need to add the OpenAI API key. G, OPENAI_API
 
 Copy the key and create another secret in your Collab notebook. Then, we can reference it in our code.
 
-```
+```python
 openaikey = userdata.get('OPENAI_API_KEY')
 ```
 
 ### Create Embeddings
 Next, we need to write a helper function to take the input question from the user and get openAI to convert it into an embedding. We are going to use the text-embedding-3-small model. You can experiment with others, but this works great for our requirement.
 
-```
+```python
 # Function to get embedding vector for a question using OpenAI
 def get_question_embedding(question):
     response = openai.embeddings.create(input=question, model="text-embedding-3-small")
@@ -77,7 +76,7 @@ Now that we have a question, we need to ask the question against the correct dat
 
 You will see that our calls to Supabase are using the functions we created earlier, and take the question_vector as the input parameter.
 
-```
+```python
 def get_context(question) -> str:
     # Get embedding for the question
     question_embedding = get_question_embedding(question)
@@ -102,7 +101,7 @@ def get_context(question) -> str:
 ### Handle Responses
 All that is left is to handle the response to a question. Thankfully, openAI does all the heavy lifting for it. We just need to set up the prompt, and tell openAI which model to use and how many tokens to apply against my account. 
 
-```
+```python
 # Function to get AI response using OpenAI's chat completion
 def get_response(question: str):
     openai.api_key = openaikey
@@ -126,7 +125,7 @@ All that is left to do is write a quick test, run it and see our hard work pay o
 OpenAI requires tokens/credits to run similarity searches. Free plans should be sufficient to run and complete this course, but please check your balance if you have used up free credits in other projects. 
 :::
 
-```
+```python
 # Example usage
 question = "Is there a customer named Justin Chau? If so, show me his information"
 answer = get_response(question)

@@ -1,5 +1,4 @@
 ## Pre-requisites
-Duration: 0:10:00
 
 To get started, you will need to set up the following accounts. Lucky for you - you can complete this entire course using free or trial versions. You will not require a credit card or paid account. 
 

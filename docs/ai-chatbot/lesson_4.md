@@ -1,5 +1,4 @@
 ## Configure Stripe
-Duration: 0:05:00
 
 Log into the  Stripe account that you create earlier. make sure that you see the orange Test mode banner at the top. This means you are working with test data and no payment processing will occur. If you do not see this, please click the test mode toggle on the upper right. 
 

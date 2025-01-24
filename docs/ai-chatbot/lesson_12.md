@@ -1,5 +1,4 @@
 ## Bonus: Create a Front End, Next.js
-Duration: 0:15:00
 
 Now that we have our chatbot working in Python, let's create a web interface using Next.js. This will give users an intuitive way to interact with our AI-powered data analysis.
 
@@ -44,7 +43,7 @@ ecommerce-chatbot/
 
 ### Step 1: Setup Next.js Project
 Go ahead and create the basic app scaffolding:
-```
+```bash
 npx create-next-app@latest ecommerce-chatbot --typescript --tailwind --eslint
 cd  ecommerece-chatbot
 ```
@@ -59,7 +58,7 @@ We need a few personal keys for the app to run. You already have these from prev
 
 Create `.env.local` in the root directory. 
 
-```
+```bash
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 OPENAI_API_KEY=your_openai_key
@@ -96,7 +95,7 @@ const openai = new OpenAI({
 ```
 
 This generates the embedding for the user query. 
-```
+```typescript
 // Generate embedding for the user's query
 async function getQueryEmbedding(message: string) {
   const response = await openai.embeddings.create({
@@ -108,7 +107,7 @@ async function getQueryEmbedding(message: string) {
 ```
 Now, we use GPT to determine whether the query is related to customers, products, or invoices. 
 
-```
+```typescript
 // Categorize the user's query
 async function categorizeQuery(message: string) {
   const response = await openai.chat.completions.create({
@@ -132,7 +131,7 @@ async function categorizeQuery(message: string) {
 ```
 Now, we map the category to the right Supabase function: 
 
-```
+```typescript
 // Match query category to Supabase function
 function getSupabaseFunction(category: string) {
   const functionMap = {
@@ -146,7 +145,7 @@ function getSupabaseFunction(category: string) {
 
 The function from Supabase is called and retrives the relevant data. 
 
-```
+```typescript
 // Query Supabase for related data
 async function querySupabase(functionName: string, queryEmbedding: number[]) {
   const { data, error } = await supabase.rpc(functionName, {
@@ -156,8 +155,9 @@ async function querySupabase(functionName: string, queryEmbedding: number[]) {
   return data;
 }
 ```
+
 GPT generates a final response. 
-```
+```typescript
 // Generate a meaningful response using GPT
 async function generateGPTResponse(message: string, context: string) {
   const response = await openai.chat.completions.create({
@@ -181,7 +181,7 @@ async function generateGPTResponse(message: string, context: string) {
 
 Lastly, we can consolidate all of this into a POST function that is the final request: 
 
-```
+```typescript
 export async function POST(request: Request) {
   try {
     const { message } = await request.json();
@@ -221,7 +221,7 @@ export async function POST(request: Request) {
 ### Step 3: Entry Point for App
 Once you complete the route, you will have to add to `page.tsx` as that is your main entry point:
 
-```
+```typescript
 'use client';
 
 import { useState } from 'react';
@@ -292,7 +292,7 @@ In order to structure how the chatbot itself looks, we would need ChatInput.tsx 
 
 components/ui/ChatInput.tsx:
 
-```
+```typescript
 import React from 'react';
 
 interface ChatInputProps {
@@ -329,7 +329,7 @@ export default function ChatInput({ input, setInput, handleSubmit, isLoading }: 
 
 components/ui/ChatMessage.tsx: 
 
-```
+```typescript
 import React from 'react';
 import { Message } from '@/app/types/chat';
 

@@ -1,5 +1,4 @@
 ## Sync Data
-Duration: 0:03:00
  - choose stream
  - set up sync options. Overwrite, full sync etc.\
  - set embeddings.
