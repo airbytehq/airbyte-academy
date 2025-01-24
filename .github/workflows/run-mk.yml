@@ -25,3 +25,11 @@ jobs:
 
       - name: Run mk.py
         run: python mk.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add docs/ index.md
+          git commit -m "Auto-generate course files" || exit 0
+          git push
