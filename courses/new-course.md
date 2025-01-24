@@ -1,8 +1,3 @@
----
-title: How to add New Course to Thinkific using Hackmd
-
----
-
 # How to add New Course to Thinkific using Hackmd
 
 ## Lesson 1
