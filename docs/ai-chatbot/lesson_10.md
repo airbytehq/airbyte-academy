@@ -15,14 +15,14 @@ For this section, you will have to use PLpgSQL in the function definition, which
 :::
 ### find_related_customer
 
-```
+```sql
 SELECT *
     FROM customers     
     ORDER BY embedding <=> question_vector;
 ```
 
 ### find_related_invoices
-```
+```sql
 SELECT *
     FROM invoices     
     ORDER BY embedding <=> question_vector
@@ -30,7 +30,7 @@ SELECT *
 
 ### find_related_products
 
-```
+```sql
     SELECT *
     FROM products     
     ORDER BY embedding <=> question_vector

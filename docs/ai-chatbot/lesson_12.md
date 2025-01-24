@@ -3,9 +3,12 @@ Duration: 0:15:00
 
 Now that we have our chatbot working in Python, let's create a web interface using Next.js. This will give users an intuitive way to interact with our AI-powered data analysis.
 
-The app when finished, should look something like [this](https://youtu.be/irh42TDNTFQ//)! 
+The app when finished, should look something like:
 
-Follow along with the [GitHub repo](https://github.com/AkritiKeswani/ecommerce-chatbot//) for reference! If you want a better idea of where to place files generally, see the directory structure below
+[![Airbyte AI Sample](https://img.youtube.com/vi/irh42TDNTFQ/0.jpg)](https://www.youtube.com/watch?v=irh42TDNTFQ)
+
+
+If you prefer, the code for the app is avaible in this  [GitHub repo](https://github.com/AkritiKeswani/ecommerce-chatbot//). To help you better navigate the app,  see the directory structure below
 ```
 ecommerce-chatbot/
 ├── src/
@@ -40,16 +43,19 @@ ecommerce-chatbot/
 ```
 
 ### Step 1: Setup Next.js Project
+Go ahead and create the basic app scaffolding:
 ```
 npx create-next-app@latest ecommerce-chatbot --typescript --tailwind --eslint
 cd  ecommerece-chatbot
 ```
 
 **Install Dependencies**
+Then install the dependencies
 
 `npm install @supabase/supabase-js openai`
 
 **Environment Variables**
+We need a few personal keys for the app to run. You already have these from previous sections in the tutorial. We will store them in a local environment file for next.js to use.
 
 Create `.env.local` in the root directory. 
 
@@ -59,6 +65,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 OPENAI_API_KEY=your_openai_key
 ```
 ### Step 2: Create API Route 
+Let's create some API routes so you app knows where to go
 
 `(/api/chat/route.ts)`
 
@@ -71,7 +78,7 @@ This is the most critical part of the app, where the user's query is:
 
 This is where you set up connections to Supabase and OpenAI. 
 
-```
+```typescript
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { createClient } from '@supabase/supabase-js';

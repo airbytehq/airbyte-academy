@@ -10,17 +10,17 @@ At the end of each step, don't forget to tap the Run button beside the code to h
 ### Add Required Libraries
 Install the required libraries.
 
-```
+```bash
 pip install supabase; openai
-
 ```
+
 Then, import everything into your project space. 
 
 :::info
 You may notice that we didn't import os. This is automatically available in the collab notebook. 
 :::
 
-```
+```python
 import os
 from supabase import create_client, Client
 import openai
@@ -39,7 +39,7 @@ python.
 
 Now, configure your client
 
-```
+```python
 from google.colab import userdata
 
 url = userdata.get('SUPABASE_URL')
@@ -122,17 +122,13 @@ def get_response(question: str):
 ### Test it
 All that is left to do is write a quick test, run it and see our hard work pay off!
 
-TODO: CONFIRM YOU CAN DO THIS ON A FREE PLAN. SHOULD AS LONG AS YOU HAVE TRIAL CREDITS
-
-TODO: make more test. things like:
- - what is the most common product sold?
- - when someone buys more than one product, what is the most common second product sold?
- - who made the cheapest purchase? How much did they pay, and what did they buy?
- - what is the most common purchase that women make?
+:::info
+OpenAI requires tokens/credits to run similarity searches. Free plans should be sufficient to run and complete this course, but please check your balance if you have used up free credits in other projects. 
+:::
 
 ```
 # Example usage
-question = "Is there a customer named Justin? If so, show me his information"
+question = "Is there a customer named Justin Chau? If so, show me his information"
 answer = get_response(question)
 print("Answer:", answer)
 ```

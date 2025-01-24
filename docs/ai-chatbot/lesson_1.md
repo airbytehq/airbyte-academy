@@ -4,8 +4,7 @@ From chatbots to large language models it seems AI is everywhere. Developer tool
 
 In this tutorial, you will build an AI-powered chatbot to allow users to interact with e-commerce data. They will be able to ask natural language questions to uncover insights in the data. 
 
-[todo: short video of completed app](/3cTdWXCbT_atl5FCfsbQsA)
-> [name=Justin Chao]
+
 
 ### What You Will Learn
 In this tutorial, you will learn the following how to deploy, configure, and create an AI+data full stack application. 
