@@ -5,7 +5,7 @@ import re
 def split_markdown(input_file, output_folder):
     """
     Split a Markdown file into multiple .md files based on the '##' chapter headings.
-    Also create an index.md that references all chapters.
+    Returns the course title and chapters for index generation.
     """
 
     # 1. Read all lines from the input markdown
@@ -79,29 +79,41 @@ def split_markdown(input_file, output_folder):
         )
         chapters.append((chapter_number, current_chapter_title, filename))
 
-    # 8. Create the index.md in `output_folder`
-    index_path = os.path.join(output_folder, "index.md")
+    return main_title, chapters
+
+
+def process_all_courses(courses_dir, output_dir):
+    """Process all markdown files in the courses directory."""
+    all_courses = []
+
+    # Process each .md file in courses directory
+    for filename in os.listdir(courses_dir):
+        print("Found file: ", filename)
+        if filename.endswith(".md"):
+            input_file = os.path.join(courses_dir, filename)
+            course_name = os.path.splitext(filename)[0]
+
+            # Split the markdown and get course info
+            main_title, chapters = split_markdown(input_file, output_dir)
+            all_courses.append((main_title, course_name, chapters))
+
+    # Create main index.md
+    index_path = os.path.join("index.md")
     with open(index_path, "w", encoding="utf-8") as index_file:
-        # Write the main title (if any), or a fallback
-        if main_title:
-            index_file.write(f"# {main_title}\n\n")
-        else:
-            index_file.write("# Course Index\n\n")
+        for course_title, course_name, chapters in all_courses:
+            # Write course title
+            index_file.write(f"# {course_title}\n\n")
 
-        # List all chapters
-        for ch_num, ch_title, ch_filename in chapters:
-            # We can write them as links: `[Chapter 1](my_course/chapter_1.md)`
-            # Or simply list them. Adjust to your preference.
-
-            # Example: `- [Chapter 1: Some Title](my_course/chapter_1.md)`
-            index_file.write(
-                f"- [Lesson {ch_num}: {ch_title}]({base_name}/{ch_filename})\n"
-            )
+            # List all chapters
+            for ch_num, ch_title, ch_filename in chapters:
+                index_file.write(
+                    f"- [Lesson {ch_num}: {ch_title}](docs/{course_name}/{ch_filename})\n"
+                )
+            index_file.write("\n")
 
 
 if __name__ == "__main__":
-    # Example usage:
-    input_md = "courses/ai-chatbot.md"
+    courses_dir = "courses"
     output_dir = "docs"
-    split_markdown(input_md, output_dir)
-    print("Done! Check the 'output' folder for results.")
+    process_all_courses(courses_dir, output_dir)
+    print("Done! Check the 'docs' folder for results.")

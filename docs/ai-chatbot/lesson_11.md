@@ -20,7 +20,7 @@ Then, import everything into your project space.
 You may notice that we didn't import os. This is automatically available in the collab notebook. 
 :::
 
-```python
+```
 import os
 from supabase import create_client, Client
 import openai
@@ -77,7 +77,7 @@ Now that we have a question, we need to ask the question against the correct dat
 
 You will see that our calls to Supabase are using the functions we created earlier, and take the question_vector as the input parameter.
 
-```python
+```
 def get_context(question) -> str:
     # Get embedding for the question
     question_embedding = get_question_embedding(question)
