@@ -1,4 +1,4 @@
-theme: jekyll-theme-primer
+remote_theme: pages-themes/primer@v0.2.0
+title: ""
 plugins:
-  - jekyll-remote-theme
-title: "test"
+- jekyll-remote-theme # add this line to the plugins list if you already have one
