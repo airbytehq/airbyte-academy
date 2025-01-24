@@ -1,0 +1,27 @@
+name: Run mk.py Script
+
+on:
+  push:
+    branches:
+      - main # or master, depending on your default branch name
+  pull_request:
+    types:
+      - closed
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x" # Specify your Python version if needed
+
+      - name: Run mk.py
+        run: python mk.py
