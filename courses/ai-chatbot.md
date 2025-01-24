@@ -6,8 +6,7 @@ From chatbots to large language models it seems AI is everywhere. Developer tool
 
 In this tutorial, you will build an AI-powered chatbot to allow users to interact with e-commerce data. They will be able to ask natural language questions to uncover insights in the data. 
 
-[todo: short video of completed app](/3cTdWXCbT_atl5FCfsbQsA)
-> [name=Justin Chao]
+
 
 ### What You Will Learn
 In this tutorial, you will learn the following how to deploy, configure, and create an AI+data full stack application. 
@@ -208,7 +207,6 @@ Duration: 0:03:00
 
 Congratulations! You've achieved a lot in a short amount of time. You've created a fully functioning data movement pipeline. You've taken data from source such as Stripe and moved it into an AI capable data storage product like Postgres and PGVector. By using Airbyte Cloud, you can quickly schedule when to move data, handle incremental changes in that data, and easily add new data sources ensuring that any AI app you build atop this data pipeline has the most up-to-date and relevant information. Remember, at the heart of AI is access to the right data.
 
-[todo: create version of the arch diagram that has a prominant data pipeline](/AlvfEoJOTha-p_xb6wWTcw)
 
 
 Next, you will create the database functions as the sort of interface for your AI chatbot 
@@ -231,14 +229,14 @@ For this section, you will have to use PLpgSQL in the function definition, which
 :::
 ### find_related_customer
 
-```
+```sql
 SELECT *
     FROM customers     
     ORDER BY embedding <=> question_vector;
 ```
 
 ### find_related_invoices
-```
+```sql
 SELECT *
     FROM invoices     
     ORDER BY embedding <=> question_vector
@@ -246,7 +244,7 @@ SELECT *
 
 ### find_related_products
 
-```
+```sql
     SELECT *
     FROM products     
     ORDER BY embedding <=> question_vector
@@ -267,17 +265,17 @@ At the end of each step, don't forget to tap the Run button beside the code to h
 ### Add Required Libraries
 Install the required libraries.
 
-```
+```bash
 pip install supabase; openai
-
 ```
+
 Then, import everything into your project space. 
 
 :::info
 You may notice that we didn't import os. This is automatically available in the collab notebook. 
 :::
 
-```
+```python
 import os
 from supabase import create_client, Client
 import openai
@@ -296,7 +294,7 @@ python.
 
 Now, configure your client
 
-```
+```python
 from google.colab import userdata
 
 url = userdata.get('SUPABASE_URL')
@@ -379,17 +377,13 @@ def get_response(question: str):
 ### Test it
 All that is left to do is write a quick test, run it and see our hard work pay off!
 
-TODO: CONFIRM YOU CAN DO THIS ON A FREE PLAN. SHOULD AS LONG AS YOU HAVE TRIAL CREDITS
-
-TODO: make more test. things like:
- - what is the most common product sold?
- - when someone buys more than one product, what is the most common second product sold?
- - who made the cheapest purchase? How much did they pay, and what did they buy?
- - what is the most common purchase that women make?
+:::info
+OpenAI requires tokens/credits to run similarity searches. Free plans should be sufficient to run and complete this course, but please check your balance if you have used up free credits in other projects. 
+:::
 
 ```
 # Example usage
-question = "Is there a customer named Justin? If so, show me his information"
+question = "Is there a customer named Justin Chau? If so, show me his information"
 answer = get_response(question)
 print("Answer:", answer)
 ```
@@ -403,9 +397,12 @@ Duration: 0:15:00
 
 Now that we have our chatbot working in Python, let's create a web interface using Next.js. This will give users an intuitive way to interact with our AI-powered data analysis.
 
-The app when finished, should look something like [this](https://youtu.be/irh42TDNTFQ//)! 
+The app when finished, should look something like:
 
-Follow along with the [GitHub repo](https://github.com/AkritiKeswani/ecommerce-chatbot//) for reference! If you want a better idea of where to place files generally, see the directory structure below
+[![Airbyte AI Sample](https://img.youtube.com/vi/irh42TDNTFQ/0.jpg)](https://www.youtube.com/watch?v=irh42TDNTFQ)
+
+
+If you prefer, the code for the app is avaible in this  [GitHub repo](https://github.com/AkritiKeswani/ecommerce-chatbot//). To help you better navigate the app,  see the directory structure below
 ```
 ecommerce-chatbot/
 ├── src/
@@ -440,16 +437,19 @@ ecommerce-chatbot/
 ```
 
 ### Step 1: Setup Next.js Project
+Go ahead and create the basic app scaffolding:
 ```
 npx create-next-app@latest ecommerce-chatbot --typescript --tailwind --eslint
 cd  ecommerece-chatbot
 ```
 
 **Install Dependencies**
+Then install the dependencies
 
 `npm install @supabase/supabase-js openai`
 
 **Environment Variables**
+We need a few personal keys for the app to run. You already have these from previous sections in the tutorial. We will store them in a local environment file for next.js to use.
 
 Create `.env.local` in the root directory. 
 
@@ -459,6 +459,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 OPENAI_API_KEY=your_openai_key
 ```
 ### Step 2: Create API Route 
+Let's create some API routes so you app knows where to go
 
 `(/api/chat/route.ts)`
 
@@ -471,7 +472,7 @@ This is the most critical part of the app, where the user's query is:
 
 This is where you set up connections to Supabase and OpenAI. 
 
-```
+```typescript
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { createClient } from '@supabase/supabase-js';
@@ -793,7 +794,3 @@ As you can see below, our app flow is as follows:
 - Next.js Frontend: Provides a user-friendly, real-time chat interface.
 
 
-## Next Steps
-Duration: 0:02:00
-
- 
