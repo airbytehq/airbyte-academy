@@ -1,0 +1,6 @@
+theme: jekyll-theme-minimal
+title: "test"
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
