@@ -1,7 +1,6 @@
 # Build an AI Chatbot
 
 ## Overview 
-Duration: 0:02:00
 From chatbots to large language models it seems AI is everywhere. Developer tools and platforms are moving at an incredible pace making it possible for anyone with some coding skills to build highly complex AI-driven apps in a short amount of time. At the heart of any AI application is access to the right data. The Airbyte platform is a core aspect of building the right AI data stack to unlock data, whether it is structured or unstructed and make it available for AI use cases.   
 
 In this tutorial, you will build an AI-powered chatbot to allow users to interact with e-commerce data. They will be able to ask natural language questions to uncover insights in the data. 
@@ -32,7 +31,6 @@ Whilst a basic understanding of coding in Next.js, Python, and SQL is helpful, i
 
 
 ## Pre-requisites
-Duration: 0:10:00
 
 To get started, you will need to set up the following accounts. Lucky for you - you can complete this entire course using free or trial versions. You will not require a credit card or paid account. 
 
@@ -47,7 +45,6 @@ Once you have created all of your accounts. Let's continue.
 
 
 ## A Quick AI Terminology Primer
-Duration: 0:05:00
 
 There are a lot of new terms when working with AI. They can be overwhelming, but they don't have to be. Here is a quick primer on the most important things you need to understand. Throughout this tutorial, you will apply many of these techniques in your app. 
 
@@ -64,7 +61,6 @@ There are a lot of new terms when working with AI. They can be overwhelming, but
 With a primer on key terminology out of the way, it is time to start building your app.
 
 ## Configure Stripe
-Duration: 0:05:00
 
 Log into the  Stripe account that you create earlier. make sure that you see the orange Test mode banner at the top. This means you are working with test data and no payment processing will occur. If you do not see this, please click the test mode toggle on the upper right. 
 
@@ -107,7 +103,6 @@ One thing you do need to do is enable PGVector. PGVector is an extension to Post
 
 
 ## Create Source Connector & Streams
-Duration: 0:10:00
 
 At this point, we have know the source of the data (stripe) and where we want to move the data, or destination (postgres on supabase). It is time to move the data. For this, we will use the Airbyte Cloud platform. To get started, you will need access to your [Airbyte credentials](https://cloud.airbyte.com/signup?utm_campaign=TDD_Search_Brand_USA&utm_source=adwords&utm_term=airbyte%20cloud&_gl=1*v7yfqs*_gcl_aw*R0NMLjE3MzQ5ODcwNDAuQ2owS0NRaUFzYVM3QmhEUEFSSXNBQVg1Y1NBOEFiMXd5RE45YzNOVFRRYU04ODNHdU5VRDBwV2RyUXlrYWp0OWI0WGJrMVNSQnRpUGpOa2FBakdrRUFMd193Y0I.*_gcl_au*OTc3Mjg2MDc0LjE3MzA4NDY2MjIuNDg2MzQ0NDM3LjE3MzIwNTI0ODAuMTczMjA1MjQ3OQ..//), and we will establish our connection first. 
 
@@ -193,7 +188,6 @@ To build out the full connection, we set up [PGVector](https://supabase.com/docs
 
 
 ## Sync Data
-Duration: 0:03:00
  - choose stream
  - set up sync options. Overwrite, full sync etc.\
  - set embeddings.
@@ -203,7 +197,6 @@ Duration: 0:03:00
 
 
 ## Recap: Data Movement Pipeline
-Duration: 0:03:00
 
 Congratulations! You've achieved a lot in a short amount of time. You've created a fully functioning data movement pipeline. You've taken data from source such as Stripe and moved it into an AI capable data storage product like Postgres and PGVector. By using Airbyte Cloud, you can quickly schedule when to move data, handle incremental changes in that data, and easily add new data sources ensuring that any AI app you build atop this data pipeline has the most up-to-date and relevant information. Remember, at the heart of AI is access to the right data.
 
@@ -213,7 +206,7 @@ Next, you will create the database functions as the sort of interface for your A
 
 
 ## Create Database Functions
-Duration: 0:10:00
+
 At this stage, you should have your Stripe data sync'ed into the public schema running in Supabase. You will have three tables corresponding to the streams you set up in Airbyte. You will also notice that, thanks to the PGVector connector an embeddings column has automatically been created and populated for you. We are going to use this to perform a similarity search via openAI and your chatbot.
 
 ![CleanShot 2024-12-23 at 12.26.28](https://hackmd.io/_uploads/SJjtvSwHyl.png)
@@ -254,7 +247,6 @@ That's it. Make sure all of your work is saved, and your Airbyte Sync is complet
 ![Screenshot 2025-01-07 at 12.02.20 PM](https://hackmd.io/_uploads/BJYIubiIye.png)
 
 ## The AI Chatbot
-Duration: 0:20:00
 
 You will create the AI chatbot in Python. To make things simple, we will use a Google Collab notebook. You can think of this as an online IDE. Go ahead and navigate to [Google Collab](https://colab.research.google.com/) and create a new notebook called airbyteai. If you would prefer to follow along, here is [a completed notebook](https://colab.research.google.com/drive/1B8QXrUGPi5JvjOwVREoGdAK72AJyU5fy#scrollTo=HVDlskc0S6ry) for you.
 
@@ -314,14 +306,14 @@ Just like we did with Supabase, we need to add the OpenAI API key. G, OPENAI_API
 
 Copy the key and create another secret in your Collab notebook. Then, we can reference it in our code.
 
-```
+```python
 openaikey = userdata.get('OPENAI_API_KEY')
 ```
 
 ### Create Embeddings
 Next, we need to write a helper function to take the input question from the user and get openAI to convert it into an embedding. We are going to use the text-embedding-3-small model. You can experiment with others, but this works great for our requirement.
 
-```
+```python
 # Function to get embedding vector for a question using OpenAI
 def get_question_embedding(question):
     response = openai.embeddings.create(input=question, model="text-embedding-3-small")
@@ -332,7 +324,7 @@ Now that we have a question, we need to ask the question against the correct dat
 
 You will see that our calls to Supabase are using the functions we created earlier, and take the question_vector as the input parameter.
 
-```
+```python
 def get_context(question) -> str:
     # Get embedding for the question
     question_embedding = get_question_embedding(question)
@@ -357,7 +349,7 @@ def get_context(question) -> str:
 ### Handle Responses
 All that is left is to handle the response to a question. Thankfully, openAI does all the heavy lifting for it. We just need to set up the prompt, and tell openAI which model to use and how many tokens to apply against my account. 
 
-```
+```python
 # Function to get AI response using OpenAI's chat completion
 def get_response(question: str):
     openai.api_key = openaikey
@@ -381,7 +373,7 @@ All that is left to do is write a quick test, run it and see our hard work pay o
 OpenAI requires tokens/credits to run similarity searches. Free plans should be sufficient to run and complete this course, but please check your balance if you have used up free credits in other projects. 
 :::
 
-```
+```python
 # Example usage
 question = "Is there a customer named Justin Chau? If so, show me his information"
 answer = get_response(question)
@@ -393,7 +385,6 @@ Congratulations! You have successfully built your AI chatbot powered by Airbyte.
 
 
 ## Bonus: Create a Front End, Next.js
-Duration: 0:15:00
 
 Now that we have our chatbot working in Python, let's create a web interface using Next.js. This will give users an intuitive way to interact with our AI-powered data analysis.
 
@@ -438,7 +429,7 @@ ecommerce-chatbot/
 
 ### Step 1: Setup Next.js Project
 Go ahead and create the basic app scaffolding:
-```
+```bash
 npx create-next-app@latest ecommerce-chatbot --typescript --tailwind --eslint
 cd  ecommerece-chatbot
 ```
@@ -453,7 +444,7 @@ We need a few personal keys for the app to run. You already have these from prev
 
 Create `.env.local` in the root directory. 
 
-```
+```bash
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 OPENAI_API_KEY=your_openai_key
@@ -490,7 +481,7 @@ const openai = new OpenAI({
 ```
 
 This generates the embedding for the user query. 
-```
+```typescript
 // Generate embedding for the user's query
 async function getQueryEmbedding(message: string) {
   const response = await openai.embeddings.create({
@@ -502,7 +493,7 @@ async function getQueryEmbedding(message: string) {
 ```
 Now, we use GPT to determine whether the query is related to customers, products, or invoices. 
 
-```
+```typescript
 // Categorize the user's query
 async function categorizeQuery(message: string) {
   const response = await openai.chat.completions.create({
@@ -526,7 +517,7 @@ async function categorizeQuery(message: string) {
 ```
 Now, we map the category to the right Supabase function: 
 
-```
+```typescript
 // Match query category to Supabase function
 function getSupabaseFunction(category: string) {
   const functionMap = {
@@ -540,7 +531,7 @@ function getSupabaseFunction(category: string) {
 
 The function from Supabase is called and retrives the relevant data. 
 
-```
+```typescript
 // Query Supabase for related data
 async function querySupabase(functionName: string, queryEmbedding: number[]) {
   const { data, error } = await supabase.rpc(functionName, {
@@ -550,8 +541,9 @@ async function querySupabase(functionName: string, queryEmbedding: number[]) {
   return data;
 }
 ```
+
 GPT generates a final response. 
-```
+```typescript
 // Generate a meaningful response using GPT
 async function generateGPTResponse(message: string, context: string) {
   const response = await openai.chat.completions.create({
@@ -575,7 +567,7 @@ async function generateGPTResponse(message: string, context: string) {
 
 Lastly, we can consolidate all of this into a POST function that is the final request: 
 
-```
+```typescript
 export async function POST(request: Request) {
   try {
     const { message } = await request.json();
@@ -615,7 +607,7 @@ export async function POST(request: Request) {
 ### Step 3: Entry Point for App
 Once you complete the route, you will have to add to `page.tsx` as that is your main entry point:
 
-```
+```typescript
 'use client';
 
 import { useState } from 'react';
@@ -686,7 +678,7 @@ In order to structure how the chatbot itself looks, we would need ChatInput.tsx 
 
 components/ui/ChatInput.tsx:
 
-```
+```typescript
 import React from 'react';
 
 interface ChatInputProps {
@@ -723,7 +715,7 @@ export default function ChatInput({ input, setInput, handleSubmit, isLoading }: 
 
 components/ui/ChatMessage.tsx: 
 
-```
+```typescript
 import React from 'react';
 import { Message } from '@/app/types/chat';
 
