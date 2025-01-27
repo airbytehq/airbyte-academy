@@ -118,9 +118,9 @@ We're starting from scratch to have complete control over our API configuration 
 
 ![startfromscratch ](https://hackmd.io/_uploads/SJrdn8PBJg.png)
 
-:::info
-Airbyte offers a pre-built Stripe connector. We could have used this in the tutorial, but wanted to get you hands-on with the connector builder, and it allows us more control over specific fields that we want to sync.
-:::
+>[!NOTE]
+> Airbyte offers a pre-built Stripe connector. We could have used this in the tutorial, but wanted to get you hands-on with the connector builder, and it allows us more control over specific fields that we want to sync.
+
 
 We'll use manual connector setup rather than the AI Assistant. This method works best when you need precise control over your API data collection.
 
@@ -175,25 +175,108 @@ After building the streams, we can publish the custom connector. Now we just nee
 
 ## Create Destination Connector
 
-To build out the full connection, we set up [PGVector](https://supabase.com/docs/guides/database/extensions/pgvector//) as our destination. This allows for vector similarity search,  which will be powerful as shown later.
+To send data from our source, we set up [PGVector](https://supabase.com/docs/guides/database/extensions/pgvector//),  as our destination. This allows for vector similarity search,  which will be powerful as shown later.
+
+![pgvector](https://hackmd.io/_uploads/Sk6PJx3B1l.png)
+
+Once we have selected this, we are presented with the following fields which we have to populate: 
+
+
+
+
+![pgvectordes-new](https://hackmd.io/_uploads/Skg_nwBu1x.png)
+
+Note that for destination settings, we must set up the indexing by choosing OpenAI, inserting the respective API key, and choosing the "text-embedding-ada-002" model.
+
+Supabase host should just be something like aws-0-us-west-1.pooler.supabase.com, while the database is "postgres," followed by your respective Supabase user and password credentials. 
+
+## Sync Data
+
+Now that we have our PGVector destinaiton setup, the final step is to configure the connection to tell Airbyte how you want to move data.
+
+We have to create a new connection, and then define the source, which is going to be the custom Stripe connector built earlier. 
+
+
 
 ![ssq](https://hackmd.io/_uploads/HJaByghSJl.png)
 
 ![seup-destination](https://hackmd.io/_uploads/Bk5I1xhSkx.png)
 
+Next is to test the source with the API key. 
+
 ![ss2](https://hackmd.io/_uploads/rkbPJgnrkl.png)
 
-![pgvector](https://hackmd.io/_uploads/Sk6PJx3B1l.png)
+
+You should see a success message similar to this:
+
+![connection2](https://hackmd.io/_uploads/S17UzuSdyx.png)
+
+After this, you would simply define the destination that you set up earlier, as this will have all the necessary credentials for PGVector. 
+
+
+![destinationnewwww](https://hackmd.io/_uploads/HJk4Qdruke.png)
+
+Next step is to just wait till the schema is fetched so you can select your streams. 
+
+![destination](https://hackmd.io/_uploads/rk_ufdH_ke.png)
+
+
+Go ahead and choose the streams created earlier - customers, search customer, invoices, and products. 
+
+![selectstreams](https://hackmd.io/_uploads/B13DXdSO1x.png)
+
+
+Great! Now, we can configure the connection. 
+
+![configfureconnecTIon](https://hackmd.io/_uploads/HkcQV_Hd1x.png)
 
 
 
-## Sync Data
- - choose stream
- - set up sync options. Overwrite, full sync etc.\
- - set embeddings.
- - indexing
- - run sync and show timeline and logs
- - log into superbase and look at customers, invoices, products. Notice the embeddings. 
+Click "Finish & Sync" to finally move the data! 
+
+![airbyteconnectiondone](https://hackmd.io/_uploads/B18HN_Buke.png)
+
+You will know when your sync works when all streams are completed with green checkmarks! 
+
+Ideally, before moving on, you will want to make sure that the data was properly moved to Supabase. 
+
+This can be done by logging into the dashboard, and seeing Table Editor. If there are tables for customers, invoices, and products, you are set! 
+
+There should be an emebeddings column with vector data. 
+
+You can run a `SELECT` query in SQL editor within Supabase to verify this data being populated. Examples are shown below: 
+
+To check if your tables exist and have data - 
+
+```sql
+SELECT COUNT(*) FROM customers;
+SELECT COUNT(*) FROM products;
+SELECT COUNT(*) FROM invoices;
+```
+
+Each should return a number greater than 0 to indicate data. 
+To verify embeddings were created, you could run this: 
+
+```sql
+-- Check customer embeddings
+SELECT id, email, embedding 
+FROM customers 
+LIMIT 1;
+
+-- Check product embeddings
+SELECT id, name, embedding 
+FROM products 
+LIMIT 1;
+
+-- Check invoice embeddings
+SELECT id, customer_id, embedding 
+FROM invoices 
+LIMIT 1;
+```
+
+Note that these are just verification checks to be sure, but there are other ways to check manually too. 
+
+Other than that, you are set! 
 
 
 ## Recap: Data Movement Pipeline
@@ -206,7 +289,7 @@ Next, you will create the database functions as the sort of interface for your A
 
 
 ## Create Database Functions
-
+Duration: 0:10:00
 At this stage, you should have your Stripe data sync'ed into the public schema running in Supabase. You will have three tables corresponding to the streams you set up in Airbyte. You will also notice that, thanks to the PGVector connector an embeddings column has automatically been created and populated for you. We are going to use this to perform a similarity search via openAI and your chatbot.
 
 ![CleanShot 2024-12-23 at 12.26.28](https://hackmd.io/_uploads/SJjtvSwHyl.png)
@@ -215,11 +298,10 @@ Before we do however, we need to create a few helper functions. These functions,
 
 Let's go ahead and create each function. From within Supabase, make sure you are in the database section, then tap Functions, Create new function. Repeat this process to create the following three functions. Each function takes a single argument, question_vector, of return type vector.
 
-:::info
+>[!NOTE]
+> For this section, you will have to use PLpgSQL in the function definition, which is essentially just an extension on top of normal SQL. This may cause syntax errors so we reccomend using SQL editor to test in, as your playground! 
 
-For this section, you will have to use PLpgSQL in the function definition, which is essentially just an extension on top of normal SQL. This may cause syntax errors so we reccomend using SQL editor to test in, as your playground! 
 
-:::
 ### find_related_customer
 
 ```sql
@@ -250,9 +332,9 @@ That's it. Make sure all of your work is saved, and your Airbyte Sync is complet
 
 You will create the AI chatbot in Python. To make things simple, we will use a Google Collab notebook. You can think of this as an online IDE. Go ahead and navigate to [Google Collab](https://colab.research.google.com/) and create a new notebook called airbyteai. If you would prefer to follow along, here is [a completed notebook](https://colab.research.google.com/drive/1B8QXrUGPi5JvjOwVREoGdAK72AJyU5fy#scrollTo=HVDlskc0S6ry) for you.
 
-:::info
-At the end of each step, don't forget to tap the Run button beside the code to have Collab execute it for you.
-:::
+>[!NOTE]
+> At the end of each step, don't forget to tap the Run button beside the code to have Collab execute it for you.
+
 
 ### Add Required Libraries
 Install the required libraries.
@@ -263,9 +345,9 @@ pip install supabase; openai
 
 Then, import everything into your project space. 
 
-:::info
-You may notice that we didn't import os. This is automatically available in the collab notebook. 
-:::
+>[!NOTE]
+> You may notice that we didn't import os. This is automatically available in the collab notebook. 
+
 
 ```python
 import os
@@ -279,8 +361,8 @@ We need to configure the supabase client using the URL and Client key that we pr
 Within Collab, tap the key icon on the left, and add two secrets. Both of these may be obtained within Supabase via Settings > Configuration > API 
 python.
 
-- SUPABASE_URL
-- SUPABASE_KEY
+- `SUPABASE_URL`
+- `SUPABASE_KEY`
  
 ![CleanShot 2024-12-23 at 13.10.04](https://hackmd.io/_uploads/By5a-LDHyx.png)
 
@@ -294,9 +376,9 @@ key = userdata.get('SUPABASE_KEY')
 supabase: Client = create_client(url, key)
 ```
 
-::: info
-When you tap run, if this is your first time accessing the keys, you will be prompted to grant access to the secrets. This is ok. Accept and continue.
-:::
+>[!NOTE]
+> When you tap run, if this is your first time accessing the keys, you will be prompted to grant access to the secrets. This is ok. Accept and continue.
+
 
 ### Configure OpenAI 
 Just like we did with Supabase, we need to add the OpenAI API key. G, OPENAI_API_KEY, add it to your code. To obtain an OpenAI API key, log into your OpenAI account, tap the cog icon in the upper right, then API Keys from the left hand menu, and finally tap Create New Secret Key. 
@@ -369,9 +451,9 @@ def get_response(question: str):
 ### Test it
 All that is left to do is write a quick test, run it and see our hard work pay off!
 
-:::info
-OpenAI requires tokens/credits to run similarity searches. Free plans should be sufficient to run and complete this course, but please check your balance if you have used up free credits in other projects. 
-:::
+>[!NOTE]
+> OpenAI requires tokens/credits to run similarity searches. Free plans should be sufficient to run and complete this course, but please check your balance if you have used up free credits in other projects. 
+
 
 ```python
 # Example usage
@@ -385,6 +467,7 @@ Congratulations! You have successfully built your AI chatbot powered by Airbyte.
 
 
 ## Bonus: Create a Front End, Next.js
+
 
 Now that we have our chatbot working in Python, let's create a web interface using Next.js. This will give users an intuitive way to interact with our AI-powered data analysis.
 
@@ -541,7 +624,6 @@ async function querySupabase(functionName: string, queryEmbedding: number[]) {
   return data;
 }
 ```
-
 GPT generates a final response. 
 ```typescript
 // Generate a meaningful response using GPT
@@ -784,5 +866,3 @@ As you can see below, our app flow is as follows:
 - Supabase SQL Functions: Route queries to the correct tables.
 - OpenAI GPT: Enhances the experience with human-like responses.
 - Next.js Frontend: Provides a user-friendly, real-time chat interface.
-
-
