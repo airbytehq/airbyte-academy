@@ -5,10 +5,10 @@ Now that we have our chatbot working in Python, let's create a web interface usi
 
 The app when finished, should look something like:
 
-[![Airbyte AI Sample](https://img.youtube.com/vi/irh42TDNTFQ/0.jpg)](https://www.youtube.com/watch?v=irh42TDNTFQ)
+<a href="https://img.youtube.com/vi/irh42TDNTFQ/0.jpg" target="_blank">![Airbyte AI Sample</a>](https://www.youtube.com/watch?v=irh42TDNTFQ)
 
 
-If you prefer, the code for the app is avaible in this  [GitHub repo](https://github.com/AkritiKeswani/ecommerce-chatbot//). To help you better navigate the app,  see the directory structure below
+If you prefer, the code for the app is avaible in this  <a href="https://github.com/AkritiKeswani/ecommerce-chatbot//" target="_blank">GitHub repo</a>. To help you better navigate the app,  see the directory structure below
 ```
 ecommerce-chatbot/
 ├── src/

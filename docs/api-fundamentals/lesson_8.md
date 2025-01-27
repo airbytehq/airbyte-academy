@@ -41,15 +41,15 @@ for source in res.sources_response.data:
 
 Now let's understand what happened here and how you can use the Python SDK to run other commands.
 
-The `airbyte_api` has all endpoints available by the API. There are listed [here](https://github.com/airbytehq/airbyte-api-python-sdk/tree/main?tab=readme-ov-file#available-resources-and-operations).
+The `airbyte_api` has all endpoints available by the API. There are listed <a href="https://github.com/airbytehq/airbyte-api-python-sdk/tree/main?tab=readme-ov-file#available-resources-and-operations" target="_blank">here</a>.
 
 Each method has an example of how to build their payload to run the command.
 
 Let's do another example, now creating a new source.
 
-1. Go to the method lists [documentation](https://github.com/airbytehq/airbyte-api-python-sdk/tree/main?tab=readme-ov-file#available-resources-and-operations)
+1. Go to the method lists <a href="https://github.com/airbytehq/airbyte-api-python-sdk/tree/main?tab=readme-ov-file#available-resources-and-operations" target="_blank">documentation</a>
 2. Search for `sources` → `create_source`
-    1. You're going to this [page](https://github.com/airbytehq/airbyte-api-python-sdk/blob/main/docs/sdks/sources/README.md#create_source)
+    1. You're going to this <a href="https://github.com/airbytehq/airbyte-api-python-sdk/blob/main/docs/sdks/sources/README.md#create_source" target="_blank">page</a>
 
 The example provided in the documentation is quite complex to understand, so let's create a simpler one. But before let's break what we're going to need:
 

@@ -1,14 +1,3 @@
-# Using Airbyte Platform APIs to Build Data Pipelines
-
-- [Lesson 1: Intro](docs/api-fundamentals/lesson_1.md)
-- [Lesson 2: Pre-reqs (Q)](docs/api-fundamentals/lesson_2.md)
-- [Lesson 3: Using the Airbyte API with Postman](docs/api-fundamentals/lesson_3.md)
-- [Lesson 4: Generate the Access Token](docs/api-fundamentals/lesson_4.md)
-- [Lesson 5: Using the Python Airbyte API SDK](docs/api-fundamentals/lesson_5.md)
-- [Lesson 6: Create Client Credentials](docs/api-fundamentals/lesson_6.md)
-- [Lesson 7: Initiate the API](docs/api-fundamentals/lesson_7.md)
-- [Lesson 8: Making our first request using Python SDK](docs/api-fundamentals/lesson_8.md)
-
 # Build an AI Chatbot
 
 - [Lesson 1: Overview](docs/ai-chatbot/lesson_1.md)
@@ -33,4 +22,15 @@
 - [Lesson 5: Images are important](docs/new-course/lesson_5.md)
 - [Lesson 6: Publishing a Course](docs/new-course/lesson_6.md)
 - [Lesson 7: Conclusion](docs/new-course/lesson_7.md)
+
+# Using Airbyte Platform APIs to Build Data Pipelines
+
+- [Lesson 1: Intro](docs/api-fundamentals/lesson_1.md)
+- [Lesson 2: Pre-reqs (Q)](docs/api-fundamentals/lesson_2.md)
+- [Lesson 3: Using the Airbyte API with Postman](docs/api-fundamentals/lesson_3.md)
+- [Lesson 4: Generate the Access Token](docs/api-fundamentals/lesson_4.md)
+- [Lesson 5: Using the Python Airbyte API SDK](docs/api-fundamentals/lesson_5.md)
+- [Lesson 6: Create Client Credentials](docs/api-fundamentals/lesson_6.md)
+- [Lesson 7: Initiate the API](docs/api-fundamentals/lesson_7.md)
+- [Lesson 8: Making our first request using Python SDK](docs/api-fundamentals/lesson_8.md)
 

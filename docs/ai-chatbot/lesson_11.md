@@ -1,6 +1,6 @@
 ## The AI Chatbot
 
-You will create the AI chatbot in Python. To make things simple, we will use a Google Collab notebook. You can think of this as an online IDE. Go ahead and navigate to [Google Collab](https://colab.research.google.com/) and create a new notebook called airbyteai. If you would prefer to follow along, here is [a completed notebook](https://colab.research.google.com/drive/1B8QXrUGPi5JvjOwVREoGdAK72AJyU5fy#scrollTo=HVDlskc0S6ry) for you.
+You will create the AI chatbot in Python. To make things simple, we will use a Google Collab notebook. You can think of this as an online IDE. Go ahead and navigate to <a href="https://colab.research.google.com/" target="_blank">Google Collab</a> and create a new notebook called airbyteai. If you would prefer to follow along, here is <a href="https://colab.research.google.com/drive/1B8QXrUGPi5JvjOwVREoGdAK72AJyU5fy#scrollTo=HVDlskc0S6ry" target="_blank">a completed notebook</a> for you.
 
 >[!NOTE]
 > At the end of each step, don't forget to tap the Run button beside the code to have Collab execute it for you.

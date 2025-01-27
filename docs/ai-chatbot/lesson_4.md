@@ -8,7 +8,7 @@ Once you have your Stripe environment in Test mode, tap Developers in the lower 
 
 ### Load Test Data
 
-A chatbot is pretty boring without data. We will be retrieving data from Stripe for products, customers, and purchases. To save some time, we have created a  [python script](https://colab.research.google.com/drive/1hozY9eZ3g37NtBwBU1hDVujfJtfrpW-5?usp=sharing//) to load test data. From within, the Colab notebook. You will see 3 steps in the collab notebook: 
+A chatbot is pretty boring without data. We will be retrieving data from Stripe for products, customers, and purchases. To save some time, we have created a  <a href="https://colab.research.google.com/drive/1hozY9eZ3g37NtBwBU1hDVujfJtfrpW-5?usp=sharing//" target="_blank">python script</a> to load test data. From within, the Colab notebook. You will see 3 steps in the collab notebook: 
 - Add a secret key (tap on the key icon on the left) STRIPE_TEST_KEY and use the value from the previous section. 
 - - install the stripe library
 - run the script to create and insert test data.

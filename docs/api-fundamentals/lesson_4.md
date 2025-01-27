@@ -10,7 +10,7 @@ Here is how to get the access token using Postman.
 
 1. Go to File → New Tab
 2. Change request method from GET to POST
-3. Page the url: [`https://api.airbyte.com/v1/applications/token`](https://api.airbyte.com/v1/applications/token)
+3. Page the url: <a href="https://api.airbyte.com/v1/applications/token" target="_blank">`https://api.airbyte.com/v1/applications/token`</a>
 4. Click in the Body tab and change method from `none` to  method `raw` → `JSON`
 5. After that click in Send
 
@@ -30,5 +30,5 @@ This will return all sources you have in all workspaces you have access. You can
 
 Resources:
 
-- [Airbyte API Reference Documentation for Access Token Endpoint](https://reference.airbyte.com/reference/createaccesstoken)
+- <a href="https://reference.airbyte.com/reference/createaccesstoken" target="_blank">Airbyte API Reference Documentation for Access Token Endpoint</a>
 

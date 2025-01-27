@@ -1,6 +1,6 @@
 ## Create Destination Connector
 
-To send data from our source, we set up [PGVector](https://supabase.com/docs/guides/database/extensions/pgvector//),  as our destination. This allows for vector similarity search,  which will be powerful as shown later.
+To send data from our source, we set up <a href="https://supabase.com/docs/guides/database/extensions/pgvector//" target="_blank">PGVector</a>,  as our destination. This allows for vector similarity search,  which will be powerful as shown later.
 
 ![pgvector](https://hackmd.io/_uploads/Sk6PJx3B1l.png)
 

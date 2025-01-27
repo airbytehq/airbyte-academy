@@ -1,5 +1,5 @@
 ## Configure Supabase
-We are going to use Supabase as the backend and database portion of the chatbot. You should have already completed the pre-requisites and have a Supabase account. If not, [please create one now](https://supabase.com/dashboard/sign-up). 
+We are going to use Supabase as the backend and database portion of the chatbot. You should have already completed the pre-requisites and have a Supabase account. If not, <a href="https://supabase.com/dashboard/sign-up" target="_blank">please create one now</a>. 
 
 Once logged in, if you haven't created a Project already, tap *New Project* and select the Organization which you created previously. Name the project, "AirbyteAIBot" and Tap "Create new project".
 

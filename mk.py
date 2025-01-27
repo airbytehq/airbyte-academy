@@ -34,14 +34,28 @@ def split_markdown(input_file, output_folder):
         main_title = lines[0].replace("# ", "").strip()
 
     # 5. Helper function to write chapter to file
+    def convert_markdown_links(line):
+        """Convert markdown links to HTML <a> tags with target="_blank", excluding images"""
+        # Regular expression to match markdown links [text](url) but not ![text](url)
+        pattern = r"(?<!!)\[(.*?)\]\((.*?)\)"
+
+        def replacement(match):
+            text, url = match.groups()
+            return f'<a href="{url}" target="_blank">{text}</a>'
+
+        return re.sub(pattern, replacement, line)
+
     def write_chapter(ch_num, ch_title, ch_lines):
         """Write the collected lines for a chapter to a new file."""
         # Example file name: chapter_1.md, chapter_2.md, etc.
         chapter_filename = f"lesson_{ch_num}.md"
         chapter_path = os.path.join(output_subfolder, chapter_filename)
 
+        # Convert markdown links to HTML <a> tags before writing
+        converted_lines = [convert_markdown_links(line) for line in ch_lines]
+
         with open(chapter_path, "w", encoding="utf-8") as outfile:
-            outfile.writelines(ch_lines)
+            outfile.writelines(converted_lines)
 
         return chapter_filename
 
