@@ -14,9 +14,9 @@ We're starting from scratch to have complete control over our API configuration 
 
 ![startfromscratch ](https://hackmd.io/_uploads/SJrdn8PBJg.png)
 
-:::info
-Airbyte offers a pre-built Stripe connector. We could have used this in the tutorial, but wanted to get you hands-on with the connector builder, and it allows us more control over specific fields that we want to sync.
-:::
+>[!NOTE]
+> Airbyte offers a pre-built Stripe connector. We could have used this in the tutorial, but wanted to get you hands-on with the connector builder, and it allows us more control over specific fields that we want to sync.
+
 
 We'll use manual connector setup rather than the AI Assistant. This method works best when you need precise control over your API data collection.
 

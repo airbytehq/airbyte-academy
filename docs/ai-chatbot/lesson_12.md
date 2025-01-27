@@ -1,5 +1,6 @@
 ## Bonus: Create a Front End, Next.js
 
+
 Now that we have our chatbot working in Python, let's create a web interface using Next.js. This will give users an intuitive way to interact with our AI-powered data analysis.
 
 The app when finished, should look something like:
@@ -155,7 +156,6 @@ async function querySupabase(functionName: string, queryEmbedding: number[]) {
   return data;
 }
 ```
-
 GPT generates a final response. 
 ```typescript
 // Generate a meaningful response using GPT
@@ -398,5 +398,3 @@ As you can see below, our app flow is as follows:
 - Supabase SQL Functions: Route queries to the correct tables.
 - OpenAI GPT: Enhances the experience with human-like responses.
 - Next.js Frontend: Provides a user-friendly, real-time chat interface.
-
-

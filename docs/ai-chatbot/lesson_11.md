@@ -2,9 +2,9 @@
 
 You will create the AI chatbot in Python. To make things simple, we will use a Google Collab notebook. You can think of this as an online IDE. Go ahead and navigate to [Google Collab](https://colab.research.google.com/) and create a new notebook called airbyteai. If you would prefer to follow along, here is [a completed notebook](https://colab.research.google.com/drive/1B8QXrUGPi5JvjOwVREoGdAK72AJyU5fy#scrollTo=HVDlskc0S6ry) for you.
 
-:::info
-At the end of each step, don't forget to tap the Run button beside the code to have Collab execute it for you.
-:::
+>[!NOTE]
+> At the end of each step, don't forget to tap the Run button beside the code to have Collab execute it for you.
+
 
 ### Add Required Libraries
 Install the required libraries.
@@ -15,9 +15,9 @@ pip install supabase; openai
 
 Then, import everything into your project space. 
 
-:::info
-You may notice that we didn't import os. This is automatically available in the collab notebook. 
-:::
+>[!NOTE]
+> You may notice that we didn't import os. This is automatically available in the collab notebook. 
+
 
 ```python
 import os
@@ -31,8 +31,8 @@ We need to configure the supabase client using the URL and Client key that we pr
 Within Collab, tap the key icon on the left, and add two secrets. Both of these may be obtained within Supabase via Settings > Configuration > API 
 python.
 
-- SUPABASE_URL
-- SUPABASE_KEY
+- `SUPABASE_URL`
+- `SUPABASE_KEY`
  
 ![CleanShot 2024-12-23 at 13.10.04](https://hackmd.io/_uploads/By5a-LDHyx.png)
 
@@ -46,9 +46,9 @@ key = userdata.get('SUPABASE_KEY')
 supabase: Client = create_client(url, key)
 ```
 
-::: info
-When you tap run, if this is your first time accessing the keys, you will be prompted to grant access to the secrets. This is ok. Accept and continue.
-:::
+>[!NOTE]
+> When you tap run, if this is your first time accessing the keys, you will be prompted to grant access to the secrets. This is ok. Accept and continue.
+
 
 ### Configure OpenAI 
 Just like we did with Supabase, we need to add the OpenAI API key. G, OPENAI_API_KEY, add it to your code. To obtain an OpenAI API key, log into your OpenAI account, tap the cog icon in the upper right, then API Keys from the left hand menu, and finally tap Create New Secret Key. 
@@ -121,9 +121,9 @@ def get_response(question: str):
 ### Test it
 All that is left to do is write a quick test, run it and see our hard work pay off!
 
-:::info
-OpenAI requires tokens/credits to run similarity searches. Free plans should be sufficient to run and complete this course, but please check your balance if you have used up free credits in other projects. 
-:::
+>[!NOTE]
+> OpenAI requires tokens/credits to run similarity searches. Free plans should be sufficient to run and complete this course, but please check your balance if you have used up free credits in other projects. 
+
 
 ```python
 # Example usage
