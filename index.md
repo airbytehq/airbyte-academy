@@ -22,7 +22,7 @@
 - [Lesson 9: Recap: Data Movement Pipeline](docs/ai-chatbot/lesson_9.md)
 - [Lesson 10: Create Database Functions](docs/ai-chatbot/lesson_10.md)
 - [Lesson 11: The AI Chatbot](docs/ai-chatbot/lesson_11.md)
-- [Lesson 12: Bonus: Create a Front End, Next.js](docs/ai-chatbot/lesson_12.md)
+- [Lesson 12: Summary](docs/ai-chatbot/lesson_12.md)
 
 # How to add New Course to Thinkific using Hackmd
 

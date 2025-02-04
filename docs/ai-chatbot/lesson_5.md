@@ -3,9 +3,8 @@ We are going to use Supabase as the backend and database portion of the chatbot.
 
 Once logged in, if you haven't created a Project already, tap *New Project* and select the Organization which you created previously. Name the project, "AirbyteAIBot" and Tap "Create new project".
 
-:::info
-If you can not name your project upon initial set up, you can always do it later. Don't worry, the name is not important for any of the code we will write.
-:::
+> [!NOTE]
+> If you can not name your project upon initial set up, you can always do it later. Don't worry, the name is not important for any of the code we will write.
 
 Once your project is created, there are a few important things to note, especially when creating Destination connectors from Airbyte, in particular, Project URL and API Key. You will need these shortly. You can always access these keys, via Settings > API (under Configuration) if you need them.
 

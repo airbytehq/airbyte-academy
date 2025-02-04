@@ -1,6 +1,6 @@
 ## Create Source Connector & Streams
 
-At this point, we have know the source of the data (stripe) and where we want to move the data, or destination (postgres on supabase). It is time to move the data. For this, we will use the Airbyte Cloud platform. To get started, you will need access to your <a href="https://cloud.airbyte.com/signup?utm_campaign=TDD_Search_Brand_USA&utm_source=adwords&utm_term=airbyte%20cloud&_gl=1*v7yfqs*_gcl_aw*R0NMLjE3MzQ5ODcwNDAuQ2owS0NRaUFzYVM3QmhEUEFSSXNBQVg1Y1NBOEFiMXd5RE45YzNOVFRRYU04ODNHdU5VRDBwV2RyUXlrYWp0OWI0WGJrMVNSQnRpUGpOa2FBakdrRUFMd193Y0I.*_gcl_au*OTc3Mjg2MDc0LjE3MzA4NDY2MjIuNDg2MzQ0NDM3LjE3MzIwNTI0ODAuMTczMjA1MjQ3OQ..//" target="_blank">Airbyte credentials</a>, and we will establish our connection first. 
+Now that we have our database and other environments all set up, we know the source of the data (Stripe) and where we want to move the data, or destination (Postgres on Supabase). It is time to create the data pipeline which will move the data. For this, we will use the Airbyte Cloud platform. To get started, you will need access to your <a href="https://cloud.airbyte.com?utm_medium=lms&utm_source=course-ai" target="_blank">Airbyte credentials</a>, and we will establish our connection first. 
 
 Within Airbyte, tap Builder in the left menu, then New custom Connection.
 
@@ -8,7 +8,7 @@ Within Airbyte, tap Builder in the left menu, then New custom Connection.
 
 You will be presented with options to create your connector. Select Start from Scratch. 
 
-We're starting from scratch to have complete control over our API configuration and to precisely define what Stripe data we want to include in our AI pipeline.
+We're starting from scratch to have complete control over our API configuration and to precisely define what Stripe data we want to include in our AI pipeline. We will call the Source Connector "StripeCustomerData"
 
 
 
@@ -44,28 +44,33 @@ To set up the Customer Stream, see the <a href="https://docs.stripe.com/api/cust
 
 ![customer-stream-setup](https://hackmd.io/_uploads/ByYWfvvryl.png)
 
-We are sending a GET request and getting JSON as the response. Record selector is selected here which is essential for filtering the records of data. 
+We are sending a ``GET`` request and getting JSON as the response. Record selector is selected here which is essential for filtering the records of data. 
 
-![customerstream](https://hackmd.io/_uploads/rkc3MmsHkx.png)
+![customers](https://hackmd.io/_uploads/SJ5YsFCOke.png)
+
+Tap the test button to ensure everything is working before moving on.
 
 ### Search Customer
 
-For the search customer stream, you can use - <a href="https://docs.stripe.com/api/customers/search//" target="_blank">/v1/customers/search </a>as the endpoint. On the right, you can see the response if you filter query by specific email.  
+For the search customer stream, you can use - <a href="https://docs.stripe.com/api/customers/search//" target="_blank">/v1/customers/search </a>as the endpoint. This endpoint takes a query parameter, query and an email in the form of email:"theemail@address.com". If you want to add an email to test, simply tap the Add button beside query parameter using an email created during the Stripe data load. (You an retrieve these by tapping on Customers on the left hand navigation in Stripe) Then, tap Test. 
 
 ![search-customer-stream](https://hackmd.io/_uploads/rJTpuTjHkl.png)
 
 ### Invoices
 
-Use <a href="https://docs.stripe.com/api/invoices//" target="_blank">/v1/invoices</a> for the endpoint. 
+Use <a href="https://docs.stripe.com/api/invoices//" target="_blank">/v1/invoices</a> for the endpoint. Toggle "Use an existing stream configuration" on and select Customers. This will copy over configuration for things like the record selector. 
 
 ### Products
 
-Use <a href="https://docs.stripe.com/api/products//" target="_blank">/v1/products</a> for the endpoint. 
+Use <a href="https://docs.stripe.com/api/products//" target="_blank">/v1/products</a> for the endpoint. Toggle "Use an existing stream configuration" on and select Customers. This will copy over configuration for things like the record selector. 
 
-Note that invoices and products are set up the same way, but you can choose to add whatever field path is best and pagination if needed. 
 
-After building the streams, we can publish the custom connector. Now we just need to build the final connection! Click "Publish" on the top right corner. 
+
+After building the streams, we can publish the custom connector. Now we just need to build the final connection! Click "Publish" on the top right corner, giving it a name "Stripe-to-Supabase"
 
 ![connector-published](https://hackmd.io/_uploads/rywatyhryx.png)
+
+>[!NOTE]
+>You may see a warning that invoices has no records. This is ok for the tutorial. You can type "ignore warning" and continue. 
 
 

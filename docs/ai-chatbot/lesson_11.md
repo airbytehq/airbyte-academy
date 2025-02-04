@@ -1,6 +1,6 @@
 ## The AI Chatbot
 
-You will create the AI chatbot in Python. To make things simple, we will use a Google Collab notebook. You can think of this as an online IDE. Go ahead and navigate to <a href="https://colab.research.google.com/" target="_blank">Google Collab</a> and create a new notebook called airbyteai. If you would prefer to follow along, here is <a href="https://colab.research.google.com/drive/1B8QXrUGPi5JvjOwVREoGdAK72AJyU5fy#scrollTo=HVDlskc0S6ry" target="_blank">a completed notebook</a> for you.
+Finally, it is time to create the AI chatbot in Python. To make things simple, we will use a Google Collab notebook. You can think of this as an online IDE. Go ahead and navigate to <a href="https://colab.research.google.com/" target="_blank">Google Collab</a> and create a new notebook called airbyteai. If you would prefer to follow along, here is <a href="https://colab.research.google.com/drive/1jVFNDFV3JyYWEGj_iTQo0cDjIYzM4aTM" target="_blank">a completed notebook</a> for you.
 
 >[!NOTE]
 > At the end of each step, don't forget to tap the Run button beside the code to have Collab execute it for you.
@@ -10,33 +10,43 @@ You will create the AI chatbot in Python. To make things simple, we will use a G
 Install the required libraries.
 
 ```bash
-pip install supabase; openai
+!pip install -qU langchain-core openai supabase
 ```
 
-Then, import everything into your project space. 
-
->[!NOTE]
-> You may notice that we didn't import os. This is automatically available in the collab notebook. 
-
+Then, import everything into your project space.
 
 ```python
 import os
-from supabase import create_client, Client
 import openai
+from supabase import create_client, Client
+from langchain_core.embeddings import DeterministicFakeEmbedding
 ```
+We will again be using the Fake Embeddings model from Langchain simply to save on cost and for testing purposes.
 
-### Configure Supabase Client
-We need to configure the supabase client using the URL and Client key that we previously used in the Airbyte Destination Configuration. To keep things secure, we want to use secrets. If you are not using a Collab notebook, I encourage you to use their environment variables or a .env file to avoid hardcoding sensitive information in your app. 
+### Configure Environment Variables
+We need to configure the Supabase client using the URL and API key. To obtain these, from within Supabase tap Settings > API settings. You need the Project URL and Project API key
 
-Within Collab, tap the key icon on the left, and add two secrets. Both of these may be obtained within Supabase via Settings > Configuration > API 
-python.
+
+
+To keep things secure, we want to use secrets. If you are not using a Collab notebook, we encourage you to use their environment variables or a .env file to avoid hardcoding sensitive information in your app. 
+
+Within Collab, tap the key icon on the left, and add the following key/value pairs:
 
 - `SUPABASE_URL`
 - `SUPABASE_KEY`
  
 ![CleanShot 2024-12-23 at 13.10.04](https://hackmd.io/_uploads/By5a-LDHyx.png)
 
-Now, configure your client
+Just like we did with Supabase, we need to add the OpenAI API key. To obtain an OpenAI API key, log into your OpenAI account, tap the cog icon in the upper right, then API Keys from the left hand menu, and finally tap Create New Secret Key. Remember to copy the key immediately. You can not go back and retrieve it later. 
+
+- `OPENAI_API_KEY`
+
+![CleanShot 2024-12-23 at 16.55.35](https://hackmd.io/_uploads/HJ_WwFPBJe.png)
+
+Copy the key and create another secret in your Collab notebook.
+
+### Configure Supabase Client
+Now that all our environment variables are set, we need to use them to configure the client and make the OpenAI key available when we call the API
 
 ```python
 from google.colab import userdata
@@ -44,44 +54,62 @@ from google.colab import userdata
 url = userdata.get('SUPABASE_URL')
 key = userdata.get('SUPABASE_KEY')
 supabase: Client = create_client(url, key)
+
+
 ```
 
 >[!NOTE]
 > When you tap run, if this is your first time accessing the keys, you will be prompted to grant access to the secrets. This is ok. Accept and continue.
 
+So far, your code should look like the following:
 
-### Configure OpenAI 
-Just like we did with Supabase, we need to add the OpenAI API key. G, OPENAI_API_KEY, add it to your code. To obtain an OpenAI API key, log into your OpenAI account, tap the cog icon in the upper right, then API Keys from the left hand menu, and finally tap Create New Secret Key. 
+```python=
+import os
+import openai
+from langchain_core.embeddings import DeterministicFakeEmbedding
+from supabase import create_client, Client
+from google.colab import userdata
 
-![CleanShot 2024-12-23 at 16.55.35](https://hackmd.io/_uploads/HJ_WwFPBJe.png)
+# Access env variables
+url: str = userdata.get('SUPABASE_URL')
+key: str = userdata.get('SUPABASE_KEY')
+api_key: str = userdata.get('OPENAI_API_KEY')
+openapi.api_key = api_key
 
 
-Copy the key and create another secret in your Collab notebook. Then, we can reference it in our code.
+# Initialize Supabase client
+supabase: Client = create_client(url, key)
 
-```python
-openaikey = userdata.get('OPENAI_API_KEY')
 ```
 
-### Create Embeddings
-Next, we need to write a helper function to take the input question from the user and get openAI to convert it into an embedding. We are going to use the text-embedding-3-small model. You can experiment with others, but this works great for our requirement.
+>[!NOTE]
+> Quick note on the OpenAI API Key. The variable name we set for the key, ``api_key``, is very important. It will throw errors if you try to run this with a different variable name so just something to be aware of.
+
+### Initialize the text embeddings model
+Now we'll need to setup the text embedding model to turn our user's question in vectors. We can do this simply with the following code:
 
 ```python
-# Function to get embedding vector for a question using OpenAI
-def get_question_embedding(question):
-    response = openai.embeddings.create(input=question, model="text-embedding-3-small")
-    return response.data[0].embedding
+embeddings = DeterministicFakeEmbedding(size=1536)
 ```
-### Pass the Question to the right context (table)
-Now that we have a question, we need to ask the question against the correct dataset. This way, we can compare the embedding of the question against the embeddings of each row. To do this, let's create a simple if, else statement looking for context in the question. Specifically, we will look for a keyword that matches one of the tables that are part of the Airbyte sync job: customer, product, or invoice. 
+Ensure that the dimension size of the embedding model is set to ``1536``. This matches the chunk size we set at the destination level of Airbyte.
 
-You will see that our calls to Supabase are using the functions we created earlier, and take the question_vector as the input parameter.
+### Creating the Context
+We now need to create the context for our model to eventually use and generate a response. To do that we need to make a function that does the following:
+
+* Embeds our user's question
+* Takes those embeddings and calls the apropriate function based on the question asked
+* Returns data with the closest vector distance that answers the question
+
+The function will look like this:
 
 ```python
-def get_context(question) -> str:
-    # Get embedding for the question
-    question_embedding = get_question_embedding(question)
+def get_context(question: str) -> str:
+    # Embed the user's question
+    question_embedding = embeddings.embed_query(question)
+    
     results = []
-# Determine which table to query based on keywords in the question
+    
+    # Determine which table to query based on keywords in the question
     if "customer" in question.lower():
         query = supabase.rpc("find_related_customer", {'question_vector': question_embedding}).execute()
     elif "product" in question.lower():
@@ -97,14 +125,16 @@ def get_context(question) -> str:
 
     return results
 ```
+You'll notice that depending on the keywords found in the question, we use Supabase's RPC method to call the Postgres functions we created earlier using the question embeddings as the argument we pass in. 
 
-### Handle Responses
-All that is left is to handle the response to a question. Thankfully, openAI does all the heavy lifting for it. We just need to set up the prompt, and tell openAI which model to use and how many tokens to apply against my account. 
+### Generate a Response
+All that is left is to pass our context to the LLM and get a generated response. Thankfully, OpenAI does all the heavy lifting. We just need to set up the prompt, and tell OpenAI which model to use and how many tokens to apply against my account. 
 
-```python
+
+
+```python!
 # Function to get AI response using OpenAI's chat completion
 def get_response(question: str):
-    openai.api_key = openaikey
     response = openai.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
@@ -117,6 +147,8 @@ def get_response(question: str):
     return response.choices[0].message.content.strip()
 ```
 
+>[!NOTE]
+>We are using the gpt-4o-mini model from OpenAI. You will need to ensure that your OpenAI project is configured to allow it's use. By default, all models are allowed in the free tier, but to be safe, we want to explictly allow it via OpenAI > Settings > Project > Limits > Edit > add a check beside gpt-4o-mini and save. 
 
 ### Test it
 All that is left to do is write a quick test, run it and see our hard work pay off!
@@ -133,6 +165,5 @@ print("Answer:", answer)
 ```
 ![CleanShot 2024-12-23 at 17.14.56](https://hackmd.io/_uploads/HJlrsKwSkl.png)
 
-Congratulations! You have successfully built your AI chatbot powered by Airbyte.
 
 

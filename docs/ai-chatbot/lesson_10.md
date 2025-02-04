@@ -1,40 +1,87 @@
 ## Create Database Functions
-Duration: 0:10:00
-At this stage, you should have your Stripe data sync'ed into the public schema running in Supabase. You will have three tables corresponding to the streams you set up in Airbyte. You will also notice that, thanks to the PGVector connector an embeddings column has automatically been created and populated for you. We are going to use this to perform a similarity search via openAI and your chatbot.
+Duration: ``0:10:00``
+At this stage, you should have your Stripe data sync'ed into the public schema running in Supabase. You will have three tables corresponding to the streams you set up in Airbyte. You will also notice that, thanks to the PGVector connector an ``embedding`` column has automatically been created and populated for you. This abtracts the need to create embeddings on our source data and instead, we can focus on creating the context for our LLM to use.
 
 ![CleanShot 2024-12-23 at 12.26.28](https://hackmd.io/_uploads/SJjtvSwHyl.png)
 
-Before we do however, we need to create a few helper functions. These functions, one for each table, will pass in a question vector from openAI and compare this to the embedding of each record to find matches. Put simply, openAI takes a natural language question, converts it to a vector or numerical value, then we want to compare this to the numerical value of the embedding. The closer these two numbers are, the more relevant the results are. 
+In order to utilize those embeddings however, we need to create a few Postgres functions in Supabase. 
 
-Let's go ahead and create each function. From within Supabase, make sure you are in the database section, then tap Functions, Create new function. Repeat this process to create the following three functions. Each function takes a single argument, question_vector, of return type vector.
+These functions will allow us to:
+
+* Query the tables directly from our Python script
+* Pass the embeddings of a user's query as an argument
+* Perform a similarity search on the source data
+* Return data with the closest matches by distance in vectors
+
+Let's go ahead and create each function. From within Supabase, you can head into the SQL Editor tab and copy/paste the SQL below:
 
 >[!NOTE]
-> For this section, you will have to use PLpgSQL in the function definition, which is essentially just an extension on top of normal SQL. This may cause syntax errors so we reccomend using SQL editor to test in, as your playground! 
+>If, when running the queries below, you recieve an error that public.vector cannot be found, first make sure than the PGVector extension is enabled. If it is, replace `public.vector` with `vector`. This will resolve any discrepencies with how your schema is set up. 
 
 
 ### find_related_customer
 
 ```sql
-SELECT *
+CREATE OR REPLACE FUNCTION find_related_customer(question_vector public.vector) 
+RETURNS TABLE (
+  document_id text,
+  chunk_id text,
+  metadata json,
+  document_content text,
+  embedding public.vector
+) 
+LANGUAGE sql AS $$
+    SELECT *
     FROM customers     
-    ORDER BY embedding <=> question_vector;
+    ORDER BY embedding <=> question_vector
+    LIMIT 5; 
+$$;
 ```
-
 ### find_related_invoices
 ```sql
-SELECT *
-    FROM invoices     
+CREATE OR REPLACE FUNCTION find_related_invoices(question_vector public.vector) 
+RETURNS TABLE (
+  document_id text,
+  chunk_id text,
+  metadata json,
+  document_content text,
+  embedding public.vector
+) 
+LANGUAGE sql AS $$
+    SELECT *
+    FROM invoices  
     ORDER BY embedding <=> question_vector
+    LIMIT 5; 
+$$;
 ```
 
 ### find_related_products
-
 ```sql
+CREATE OR REPLACE FUNCTION find_related_products(question_vector public.vector) 
+RETURNS TABLE (
+  document_id text,
+  chunk_id text,
+  metadata json,
+  document_content text,
+  embedding public.vector
+) 
+LANGUAGE sql AS $$
     SELECT *
-    FROM products     
+    FROM products    
     ORDER BY embedding <=> question_vector
+    LIMIT 5; 
+$$;
 ```
-That's it. Make sure all of your work is saved, and your Airbyte Sync is complete and populated data. Now it's time to create the chatbot. 
 
-![Screenshot 2025-01-07 at 12.02.20 PM](https://hackmd.io/_uploads/BJYIubiIye.png)
+At the top of the function, you'll see that an argument called ``question_vector`` is passed into the function as type ``vector``. This is then used in the query to run a similarity search against the embedding column identified by the ``<=>`` operator.
+
+PGVector supports 3 different kinds of operators for computing distance between embeddings:
+
+* ``<->`` Euclidean distance
+* ``<#>`` Negative inner product
+* ``<=>`` Cosine distance
+
+In this tutorial, we'll be using cosine distance since it's typically a safe option with most embedding models. You can read more on this in <a href="https://supabase.com/docs/guides/ai/semantic-search#semantic-search-in-postgres" target="_blank">Supabase's docs</a>.
+
+With the functions created, we can move on to creating our AI Chatbot!
 

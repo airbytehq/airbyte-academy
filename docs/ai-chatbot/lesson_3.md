@@ -9,8 +9,6 @@ There are a lot of new terms when working with AI. They can be overwhelming, but
 5. **Hallucinations**: A hallucination refers to a scenario where a generative model, such as a large language model (LLM) that looks correct but factually incorrect, logically flawed, or completely fabricated. The best way to avoid hallucinations is to provide LLMs with domain-specific data. In this case, the data we will provide the LLM will come from Stripe.
 
 
-![ai-terminology](https://hackmd.io/_uploads/BJKpcworyl.png)
-
 
 With a primer on key terminology out of the way, it is time to start building your app.
 

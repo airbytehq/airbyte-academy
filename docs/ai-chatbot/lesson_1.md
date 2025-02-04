@@ -8,9 +8,7 @@ In this tutorial, you will build an AI-powered chatbot to allow users to interac
 ### What You Will Learn
 In this tutorial, you will learn the following how to deploy, configure, and create an AI+data full stack application. 
 
-![Intelligent Data Stack (5)](https://hackmd.io/_uploads/BJjwvDsrJl.png)
-
-
+![aichatnew](https://hackmd.io/_uploads/SJ1FeFAdyg.png)
 
 
 
