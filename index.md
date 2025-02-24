@@ -19,6 +19,7 @@
 - [Lesson 2: Pre-reqs (Q)](docs/api-fundamentals/lesson_2.md)
 - [Lesson 3: Using the Airbyte API with Postman](docs/api-fundamentals/lesson_3.md)
 - [Lesson 4: Using the Python Airbyte API SDK](docs/api-fundamentals/lesson_4.md)
+- [Lesson 5: Conclusion](docs/api-fundamentals/lesson_5.md)
 
 # How to add New Course to Thinkific using Hackmd
 
