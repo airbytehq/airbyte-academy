@@ -10,28 +10,30 @@ The easiest way to interact with an API is using apps like Postman or running `c
 
 For developers integrating the API using a Python or Java Airbyte a SDK to make it easier:
 
-- Airbyte API Python SDK
-- Airbyte API Java SDK
+- [Airbyte API Python SDK](https://github.com/airbytehq/airbyte-api-python-sdk)
+- [Airbyte API Java SDK](https://github.com/airbytehq/airbyte-api-java-sdk)
 
 In this course we're going to show how to get credentials to run commands to the Airbyte API to execute commands for us using Postman and Python.
 
 ## Pre-reqs (Q)
 
-1. Cloud account (works with both but URL different)
-2. Postman - good for testing APIs
-3. Collab notebook - this will be our IDE
+1. **Airbyte Cloud Account** (*works with both but URL different*)
+2. **Postman** (*good for testing APIs*)
+3. **Collab Notebook** (*this will be our IDE*)
 
 ## Using the Airbyte API with Postman
 
-Go to the Settings (in left side panel) in Airbyte Cloud then click in Applications. After click in `Create an application` in the top right side of the page.
+### Create an Application
 
-![image.png](Using%20Airbyte%20Platform%20APIs%20to%20Build%20Data%20Pipeline%201581b3df260c80dca55fc3b4eaeb82dc/image.png)
+Go to the Settings (in left side panel) in **Airbyte Cloud** then click in **Applications**. After click in `Create an application` in the top right side of the page.
+
+![image](https://hackmd.io/_uploads/BJjZQrc9Jx.png)
 
 Provide a name, `airbyte-course` it is important as you can track what applications are requesting to the API.
 
 The application will generate the `Client ID` and the `Client Secret` do not share them as it can expose your account.
 
-## Generate the Access Token
+### Generate the Access Token
 
 The Airbyte API Reference documentation 
 
@@ -47,7 +49,8 @@ Here is how to get the access token using Postman.
 4. Click in the Body tab and change method from `none` to  method `raw` → `JSON`
 5. After that click in Send
 
-![image.png](Using%20Airbyte%20Platform%20APIs%20to%20Build%20Data%20Pipeline%201581b3df260c80dca55fc3b4eaeb82dc/image%201.png)
+![image](https://hackmd.io/_uploads/H1gmXSc5Jx.png)
+
 
 We're going to receive the `access_token` necessary to run other commands throw the Airbyte API. Copy the entire string for the field `access_token` and let's make our next request fast before it get expired.
 
@@ -59,7 +62,7 @@ We're going to receive the `access_token` necessary to run other commands throw 
 
 This will return all sources you have in all workspaces you have access. You can check the API reference documentation page to see all parameters available to configure and filter the request.
 
-![image.png](Using%20Airbyte%20Platform%20APIs%20to%20Build%20Data%20Pipeline%201581b3df260c80dca55fc3b4eaeb82dc/image%202.png)
+![image](https://hackmd.io/_uploads/Syt47Hc9Jl.png)
 
 Resources:
 
@@ -69,13 +72,11 @@ Resources:
 
 Now let's use a Google Colab Notebook to use Python to interact with Airbyte API 🐍.
 
-Go [https://colab.google](https://colab.google) and create a new notebook.
+Go https://colab.google and create a new notebook.
 
 First let's add the `client_id` and `client_secret` as secrets in the notebook
 
-![image.png](Using%20Airbyte%20Platform%20APIs%20to%20Build%20Data%20Pipeline%201581b3df260c80dca55fc3b4eaeb82dc/image%203.png)
-
-[data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcEzxjQX5qQDzlgT0lwLzlwT5qgD5qwD5qwD5qwD5qwD5qgDwjAX5qwD5qAD5qwD5qwD5qwD0mQPregj3pQHwjwbocQrocQruhgf5qgDwjAbocQrocQrpcQr5qwDocQrrfAjpcgnpcQnpcgnwjQbwjAZUryHnAAAAJnRSTlMADjMmBhyS1fDnw2wV4K9M+P8+l/6vdfb8Xff/hN176DO+aVPn4zRFwdUAAAEASURBVHgBzVEFtsMwDEuZmRtO/r//FWfPHZ5gKvlJjUzsRxGEYRRTGEdhmLxJYZrleVFWNfxVlUWeN213SXXaD4QsGbPhQhvdtWl+El0xPDAv6L1u+zwUZZn1zVEi3TdNPswnFzGLJOd72yVJqKoUtUx149GenGvDVs65NVRmiVqHVUcWaMHgvTmqbCzAU1HsNjjDwFWORBz5MDRX7DX4fotZdIkb8N+2BXUfTFjKd0F9WqPmNNDrs5WaWpn/Jj/6CTUZMTgKQ2jKloaA/UmU+LaCRfI+vn/+xFQzVJ+DbyJjOWETqCHGtMGVqQRK8YvU2grqiFDDsoNHnCQx+03cADN4Gl+iZEmCAAAAAElFTkSuQmCC](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcEzxjQX5qQDzlgT0lwLzlwT5qgD5qwD5qwD5qwD5qwD5qgDwjAX5qwD5qAD5qwD5qwD5qwD0mQPregj3pQHwjwbocQrocQruhgf5qgDwjAbocQrocQrpcQr5qwDocQrrfAjpcgnpcQnpcgnwjQbwjAZUryHnAAAAJnRSTlMADjMmBhyS1fDnw2wV4K9M+P8+l/6vdfb8Xff/hN176DO+aVPn4zRFwdUAAAEASURBVHgBzVEFtsMwDEuZmRtO/r//FWfPHZ5gKvlJjUzsRxGEYRRTGEdhmLxJYZrleVFWNfxVlUWeN213SXXaD4QsGbPhQhvdtWl+El0xPDAv6L1u+zwUZZn1zVEi3TdNPswnFzGLJOd72yVJqKoUtUx149GenGvDVs65NVRmiVqHVUcWaMHgvTmqbCzAU1HsNjjDwFWORBz5MDRX7DX4fotZdIkb8N+2BXUfTFjKd0F9WqPmNNDrs5WaWpn/Jj/6CTUZMTgKQ2jKloaA/UmU+LaCRfI+vn/+xFQzVJ+DbyJjOWETqCHGtMGVqQRK8YvU2grqiFDDsoNHnCQx+03cADN4Gl+iZEmCAAAAAElFTkSuQmCC)
+![image](https://hackmd.io/_uploads/SJOr7B951e.png)
 
 After copy the snippet to read the secrets in the notebook.
 
@@ -95,7 +96,7 @@ client_secret = userdata.get('AIRBYTE_CLIENT_SECRET')
 
 After running the pip install let's create a credential object is going to help us refresh the token when it got expired.
 
-## Create Client Credentials
+### Create Client Credentials
 
 This will create the object has methos to retrieve new and refresh the access token. We don't need to do anything, now only provide the `client_id` and `client_secret`
 
@@ -109,7 +110,7 @@ credentials = SchemeClientCredentials(
 )
 ```
 
-## Initiate the API
+### Initiate the API
 
 ```python
 from airbyte_api.models import Security
@@ -120,7 +121,7 @@ airbyte_api = AirbyteAPI(security=Security(client_credentials=credentials))
 
 Now the variable `airbyte_api` can call any endpoint available in the API. Let's request the same as before to list all sources in our workspace.
 
-## Making our first request using Python SDK
+### Making our first request using Python SDK
 
 ```python
 from airbyte_api.api import ListWorkspacesRequest
@@ -183,7 +184,8 @@ Let's create a new source using the Faker connector.
 
 Use the left side search bar to find the connector documentation, type `sourcefaker`
 
-![image.png](Using%20Airbyte%20Platform%20APIs%20to%20Build%20Data%20Pipeline%201581b3df260c80dca55fc3b4eaeb82dc/image%204.png)
+![image](https://hackmd.io/_uploads/HyaDXB9ckg.png)
+
 
 You must access the `docs/models/sourcefaker.md`
 
@@ -197,7 +199,7 @@ source_faker = SourceFaker(
 
 Faker have all optional fields with default values. In the example we override the `count` variable from `100` to `35`.
 
-![image.png](Using%20Airbyte%20Platform%20APIs%20to%20Build%20Data%20Pipeline%201581b3df260c80dca55fc3b4eaeb82dc/image%205.png)
+![image](https://hackmd.io/_uploads/SyI_QB9cJg.png)
 
 Now let's create the `SourceCreateRequest`
 
@@ -233,5 +235,3 @@ source_response=SourceResponse(
  )
 )
 ```
-
-Tcharam 😎
