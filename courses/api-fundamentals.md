@@ -12,7 +12,7 @@ Airbyte provide two SDK:
 - [Airbyte API Python SDK](https://github.com/airbytehq/airbyte-api-python-sdk)
 - [Airbyte API Java SDK](https://github.com/airbytehq/airbyte-api-java-sdk)
 
-In this course, we will build a simple yet functional data pipeline. We will create a source and a destination, establish the connection between them, and trigger the sync to ingest data into the destination.
+In this course, we will build a simple yet functional data pipeline. We will create a source (Faker Sample) and a destination (MotherduckDb), establish the connection between them, and trigger the sync to ingest data into the destination.
 
 ## Pre-reqs (Q)
 
