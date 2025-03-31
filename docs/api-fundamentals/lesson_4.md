@@ -69,8 +69,6 @@ for workspace in res.workspaces_response.data:
 
 # Example output
 # workspace 1      00000000-360f-4ffc-1111-2507f8337b3d
-# company test     00000000-5201-491d-1111-a1fd170df189
-# user@company.com 00000000-2031-4a2f-1111-040a5d9c795c
 ```
 
 Create a variable called `wid` and attribute the `uuid` for your workspace. See image:
@@ -135,13 +133,10 @@ Go the Airbyte Source Page and check your new source!
 For our destination we're going to use Motherduck. It offers a 21 free days trial and have a nice UI to check our data later.
 Create an account <a href="https://motherduck.com/" target="_blank">here</a>.
 
-
-
 After you have created your account create the databse it will receive the data. Click in `+` right side of Attached databases sidebar. Let's call `lms`
 ![image](https://hackmd.io/_uploads/Byn9GUuaJg.png)
 
 ![image](https://hackmd.io/_uploads/SyJuGUOaye.png)
-
 
 Now, let's go to Seetings (right top corner) -> Secrets -> Access Token. The same you made with Airbyte.
 ![image](https://hackmd.io/_uploads/SyIc6r_T1l.png)
@@ -219,4 +214,7 @@ print(res)
 2. `res`: if everything runs without problem it will return an object with status code 200.
 
 That's it! Check the Airbyte UI and see your first data ingestion trigger by the API.
+
+![image](https://hackmd.io/_uploads/HyjCPUdpkg.png)
+
 

@@ -2,15 +2,13 @@
 
 Users can interact with the Airbyte platform outside of the UI using an API.
 
-This enables developers to integrate Airbyte into their monitoring system, data pipeline, or product.
+This enables developers to integrate Airbyte into their monitoring system, data pipeline, or own product.
 
-Say something about testing directly in the API page.
+The easiest way to interact with an API, when the provider offers this option, is through their API website. Airbyte provides the ability to run API calls directly on their <a href="https://reference.airbyte.com/reference/getting-started" target="_blank">website</a>. This eliminates the need for external tools to test your credentials. Other tools, such as Postman or the curl command in the terminal, also simplify this process. These methods are typically used to test commands and credentials. However, the most common approach for developers is to integrate the API using a software development kit (SDK).
 
-Developers can also integrate the API using a Python or Java Airbyte SDK to make it easier:
-
+Airbyte provide two SDK:
 - <a href="https://github.com/airbytehq/airbyte-api-python-sdk" target="_blank">Airbyte API Python SDK</a>
 - <a href="https://github.com/airbytehq/airbyte-api-java-sdk" target="_blank">Airbyte API Java SDK</a>
 
-In this course we’re going to show you how to get credentials to run commands to the Airbyte API and execute commands using Postman and Python.
-
+In this course, we will build a simple yet functional data pipeline. We will create a source and a destination, establish the connection between them, and trigger the sync to ingest data into the destination.
 
