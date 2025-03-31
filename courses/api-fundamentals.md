@@ -4,17 +4,15 @@
 
 Users can interact with the Airbyte platform outside of the UI using an API.
 
-This enables developers to integrate Airbyte into their monitoring system, data pipeline, or product.
+This enables developers to integrate Airbyte into their monitoring system, data pipeline, or own product.
 
-Say something about testing directly in the API page.
+The easiest way to interact with an API, when the provider offers this option, is through their API website. Airbyte provides the ability to run API calls directly on their [website](https://reference.airbyte.com/reference/getting-started). This eliminates the need for external tools to test your credentials. Other tools, such as Postman or the curl command in the terminal, also simplify this process. These methods are typically used to test commands and credentials. However, the most common approach for developers is to integrate the API using a software development kit (SDK).
 
-Developers can also integrate the API using a Python or Java Airbyte SDK to make it easier:
-
+Airbyte provide two SDK:
 - [Airbyte API Python SDK](https://github.com/airbytehq/airbyte-api-python-sdk)
 - [Airbyte API Java SDK](https://github.com/airbytehq/airbyte-api-java-sdk)
 
-In this course we’re going to show you how to get credentials to run commands to the Airbyte API and execute commands using Postman and Python.
-
+In this course, we will build a simple yet functional data pipeline. We will create a source and a destination, establish the connection between them, and trigger the sync to ingest data into the destination.
 
 ## Pre-reqs (Q)
 
@@ -143,8 +141,6 @@ for workspace in res.workspaces_response.data:
 
 # Example output
 # workspace 1      00000000-360f-4ffc-1111-2507f8337b3d
-# company test     00000000-5201-491d-1111-a1fd170df189
-# user@company.com 00000000-2031-4a2f-1111-040a5d9c795c
 ```
 
 Create a variable called `wid` and attribute the `uuid` for your workspace. See image:
@@ -209,13 +205,10 @@ Go the Airbyte Source Page and check your new source!
 For our destination we're going to use Motherduck. It offers a 21 free days trial and have a nice UI to check our data later.
 Create an account [here](https://motherduck.com/).
 
-
-
 After you have created your account create the databse it will receive the data. Click in `+` right side of Attached databases sidebar. Let's call `lms`
 ![image](https://hackmd.io/_uploads/Byn9GUuaJg.png)
 
 ![image](https://hackmd.io/_uploads/SyJuGUOaye.png)
-
 
 Now, let's go to Seetings (right top corner) -> Secrets -> Access Token. The same you made with Airbyte.
 ![image](https://hackmd.io/_uploads/SyIc6r_T1l.png)
@@ -294,11 +287,12 @@ print(res)
 
 That's it! Check the Airbyte UI and see your first data ingestion trigger by the API.
 
+![image](https://hackmd.io/_uploads/HyjCPUdpkg.png)
+
+
 ## Conclusion
 
-Congratulations on completing the course! You've gained practical experience in integrating Airbyte's API into your workflows using tools like Postman and Python.
-
-To further enhance your skills, consider exploring the Airbyte API Python SDK and the Airbyte API Java SDK, which can streamline your development process.
+Congratulations on completing the course! You've gained practical experience in integrating Airbyte's API into your workflows using Python.
 
 Remember, continuous practice and engagement with the community are key to mastering these tools. Stay updated with the latest developments and don't hesitate to seek assistance when needed.
 
