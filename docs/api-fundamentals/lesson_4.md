@@ -1,14 +1,18 @@
-## Using the Python Airbyte API SDK
+## Build a Pipeline using the Python SDK and Airbyte API
 
 Now let's use a Google Colab Notebook to use Python to interact with Airbyte API 🐍.
 
 Go https://colab.google and create a new notebook.
 
-First let's add the `client_id` and `client_secret` as secrets in the notebook
+You can find this information in the Airbyte Cloud -> Application Page
+![image](https://hackmd.io/_uploads/BJ0dTXO6Jl.png)
+
+Copy the `Client ID` and `Client Secret` to the Google Colab Notebook.
+Create a variable called `AIRBYTE_CLIENT_ID` and `AIRBYTE_CLIENT_SECRET`
 
 ![image](https://hackmd.io/_uploads/SJOr7B951e.png)
 
-After copy the snippet to read the secrets in the notebook.
+After copy the provided snippet to read the secrets in the notebook.
 
 Now let's install the Python library to execute the commands.
 
@@ -49,7 +53,7 @@ from airbyte_api import AirbyteAPI
 airbyte_api = AirbyteAPI(security=Security(client_credentials=credentials))
 ```
 
-Now the variable `airbyte_api` can call any endpoint available in the API. Let's request the same as before to list all sources in our workspace.
+Now the variable `airbyte_api` can call any endpoint available in the API. Let's do the same request we made before to list workspaces.
 
 ### Making our first request using Python SDK
 
@@ -69,100 +73,150 @@ for workspace in res.workspaces_response.data:
 # user@company.com 00000000-2031-4a2f-1111-040a5d9c795c
 ```
 
-This will print the workspace name and id your user have access.
+Create a variable called `wid` and attribute the `uuid` for your workspace. See image:
+![image](https://hackmd.io/_uploads/BJYYqr_p1l.png)
 
-Store this information as it will be needed later to create our first source.
+> [!Important]
+> You didn't need to create an`access token`. It was managed by the code itself. Awesome right?
+
+### Create a Source
+
+Now, let's create a source to connect to a destination and transfer some data. We'll use a mock source, but this example can easily be applied to the entire catalog.
+
 
 ```python
-from airbyte_api.api import ListSourcesRequest
+from airbyte_api.models import SourceFaker, SourceCreateRequest
 
-res = airbyte_api.sources.list_sources(
-    request=ListSourcesRequest(
-		    workspace_ids=[]
-		)
-)
-
-for source in res.sources_response.data:
-    print(source.name)
-  
-# Example of Output:  
-# My Facebook Source
-# Google Ads 1
-# Convex
-# Google Analytics 4 (GA4)
-```
-
-Now let's understand what happened here and how you can use the Python SDK to run other commands.
-
-The `airbyte_api` has all endpoints available by the API. There are listed <a href="https://github.com/airbytehq/airbyte-api-python-sdk/tree/main?tab=readme-ov-file#available-resources-and-operations" target="_blank">here</a>.
-
-Each method has an example of how to build their payload to run the command.
-
-Let's do another example, now creating a new source.
-
-1. Go to the method lists <a href="https://github.com/airbytehq/airbyte-api-python-sdk/tree/main?tab=readme-ov-file#available-resources-and-operations" target="_blank">documentation</a>
-2. Search for `sources` → `create_source`
-    1. You're going to this <a href="https://github.com/airbytehq/airbyte-api-python-sdk/blob/main/docs/sdks/sources/README.md#create_source" target="_blank">page</a>
-
-The example provided in the documentation is quite complex to understand, so let's create a simpler one. But before let's break what we're going to need:
-
-1. Create the Source model (in the example page is the `models.SourcePinterest`
-2. Create the `SourceCreateRequest` model
-3. Make the request to `create_source` method.
-
-Let's create a new source using the Faker connector.
-
-Use the left side search bar to find the connector documentation, type `sourcefaker`
-
-![image](https://hackmd.io/_uploads/HyaDXB9ckg.png)
-
-
-You must access the `docs/models/sourcefaker.md`
-
-```python
-from airbyte_api.models import SourceFaker
-
-source_faker = SourceFaker(
+source_faker_config = SourceFaker(
+    connection_type="faker",
     count=35
 )
-```
-
-Faker have all optional fields with default values. In the example we override the `count` variable from `100` to `35`.
-
-![image](https://hackmd.io/_uploads/SyI_QB9cJg.png)
-
-Now let's create the `SourceCreateRequest`
-
-```python
-source_create_request = SourceCreateRequest(
-    workspace_id='33b560c4-2de8-488d-be03-844f8e22ba0d',
-    name="source_created_using_airbyte_api",
-    configuration=source_faker
+req = SourceCreateRequest(
+    configuration=source_faker_config,
+    name='my_source_faker_using_api',
+    workspace_id=wid,
 )
+res = airbyte_api.sources.create_source(request=req)
+
+source_id =  res.source_response.source_id
+print(source_id)
 ```
+1. `source_faker_config`: create the configuration object. Think as this step as populating the field of the image below in the UI
+![image](https://hackmd.io/_uploads/HJOAjrupyl.png)
+2. `req`: Send the  the payload to send to the API. Now we inform what is the workspace we want to create the source.
+3. `res`: make the actual request to the Airbyte API
+4. `source_id`: reads the output of `res` and store the source id necessary to create a connection later.
 
-and then execute the api request
-
-```python
-airbyte_api.sources.create_source(source_create_request)
+The complete `res` response object is:
 ```
-
-the output returned by the request is:
-
-```bash
 CreateSourceResponse(
-content_type='application/json', 
-status_code=200, 
-raw_response=<Response [200]>, 
-source_response=SourceResponse(
-  configuration=SourceAirtable(
-  credentials=None, 
-  SOURCE_TYPE=<SourceAirtableAirtable.AIRTABLE: 'airtable'>), 
-  name='source_created_using_airbyte_api', 
-  source_id='0653df2b-67aa-4351-b50e-415e24939208', 
-  source_type='faker', 
-  workspace_id='33b560c4-2de8-488d-be03-844f8e22ba0d'
- )
+    content_type='application/json', 
+    status_code=200, 
+    raw_response=<Response [200]>, 
+    source_response=
+        SourceResponse(
+            configuration=SourceAirtable(
+                credentials=None, 
+                SOURCE_TYPE=<SourceAirtableAirtable.AIRTABLE: 'airtable'>), 
+                created_at=1743441021, 
+                definition_id='dfd88b22-b603-4c3d-aad7-3701784586b1', 
+                name='my_source_faker_using_api', 
+                source_id='e1ee0c87-faeb-438c-858d-3bcb813152fb', 
+                source_type='faker', 
+                workspace_id='1da6a888-9115-4431-9ded-ff0a42b10598'
+        )
 )
 ```
+
+Go the Airbyte Source Page and check your new source!
+
+### Create a Destination
+
+For our destination we're going to use Motherduck. It offers a 21 free days trial and have a nice UI to check our data later.
+Create an account <a href="https://motherduck.com/" target="_blank">here</a>.
+
+
+
+After you have created your account create the databse it will receive the data. Click in `+` right side of Attached databases sidebar. Let's call `lms`
+![image](https://hackmd.io/_uploads/Byn9GUuaJg.png)
+
+![image](https://hackmd.io/_uploads/SyJuGUOaye.png)
+
+
+Now, let's go to Seetings (right top corner) -> Secrets -> Access Token. The same you made with Airbyte.
+![image](https://hackmd.io/_uploads/SyIc6r_T1l.png)
+
+Copy the token and return to the Collab Notebook and create a new secret.
+Call the new secret of `MOTHERDUCK_APIKEY`
+![image](https://hackmd.io/_uploads/HJJn6S_ayx.png)
+
+```python
+from airbyte_api.models import DestinationDuckdb, DestinationCreateRequest
+
+md_apikey = userdata.get('MOTHERDUCK_APIKEY')
+
+duckdb_config = DestinationDuckdb(
+    destination_path="md:lms",
+    motherduck_api_key=md_apikey
+)
+req = DestinationCreateRequest(
+    configuration=duckdb_config,
+    name='my_duck_using_api',
+    workspace_id=wid,
+)
+
+res = airbyte_api.destinations.create_destination(request=req)
+
+destination_id = destination_res.destination_response.destination_id
+print(destination_id)
+```
+1. `md_apikey`: read the access token from Collab Secrets.
+2. `duckdb_config`: create the configuration for the destination, in this case we're sending data to `md:lms` database in motherduck.
+3. `req`: build the payload to create the destination.
+4. `res`: make the request and return the result.
+5. `destination_id`: stores the destination id generated in the previous request. We're going to use to create the connection.
+
+Ok now we have both source and destination created. It is time to connect them together and trigger a sync!
+
+### Create a Connection
+
+```python
+from airbyte_api.models import ConnectionCreateRequest
+
+connection_config = ConnectionCreateRequest(
+    name="my_connection_using_api",
+    source_id=source_id,
+    destination_id=destination_id,
+)
+
+res = airbyte_api.connections.create_connection(
+    request=connection_config
+)
+
+connection_id = res.connection_response.connection_id
+```
+1. `connection_config`: create the payload configuration for a connection. This is an example connect our source to destination, keep the schedule as manual and do not change any field or namespace.
+2. `res`: make the request
+3. `connection_id`: stores the id to trigger the sync in the next step.
+
+
+### Run a sync using the API
+```python
+from airbyte_api.models import JobCreateRequest, JobTypeEnum
+
+req = JobCreateRequest(
+    connection_id=connection_id,
+    job_type=JobTypeEnum.SYNC,
+)
+
+res = airbyte_api.jobs.create_job(
+    request=req
+)
+
+print(res)
+```
+1. `req`: create the payload to trigger a sync it requires the `connection_id` and the type of sync `SYNC` to ingest data or `RESET` to delete data.
+2. `res`: if everything runs without problem it will return an object with status code 200.
+
+That's it! Check the Airbyte UI and see your first data ingestion trigger by the API.
 
