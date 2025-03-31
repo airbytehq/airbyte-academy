@@ -154,6 +154,13 @@ Create a variable called `wid` and attribute the `uuid` for your workspace. See 
 Now, let's create a source to connect to a destination and transfer some data. We'll use a mock source, but this example can easily be applied to the entire catalog.
 
 
+For Source Faker you can check [this documentation](https://github.com/airbytehq/airbyte-api-python-sdk/blob/main/docs/models/sourcefaker.md) describe all required and optional fields.
+
+> [!Tip]
+> You can search all source and destination configurations [here](https://github.com/airbytehq/airbyte-api-python-sdk/tree/main/docs/models) than in the search bar search for `sourcefaker`, `destinationmother`.
+> Click in the `.md` file inside the `airbyte-api-python-sdk/docs/models` folder.
+
+
 ```python
 from airbyte_api.models import SourceFaker, SourceCreateRequest
 
@@ -216,6 +223,8 @@ Now, let's go to Seetings (right top corner) -> Secrets -> Access Token. The sam
 Copy the token and return to the Collab Notebook and create a new secret.
 Call the new secret of `MOTHERDUCK_APIKEY`
 ![image](https://hackmd.io/_uploads/HJJn6S_ayx.png)
+
+Check all parameter configuration for Destination MotherduckDb [here](https://github.com/airbytehq/airbyte-api-python-sdk/blob/main/docs/models/destinationmotherduck.md)
 
 ```python
 from airbyte_api.models import DestinationDuckdb, DestinationCreateRequest
