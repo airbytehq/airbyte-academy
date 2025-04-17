@@ -35,7 +35,7 @@ In short, PyAirbyte brings the Airbyte protocol to wherever Python runs—Jupyte
 - **Declarative** – the API mirrors the Airbyte Connector Spec.
 - **Composable** – mix‑and‑match caches, secret managers, and destinations.
 
-### 3.1 How it works How it works
+### How it works
 
 ```mermaid
 graph TD
@@ -51,7 +51,7 @@ graph TD
 - PyAirbyte writes them to a **cache** (Local DuckDB by default) or forwards them to a destination connector.
 - State messages are stored so that the next run fetches only new or updated records (incremental sync).
 
-### 3.2 Limitations
+### Limitations
 
 | **Feature**                | **PyAirbyte**                                          |
 | -------------------------- | ------------------------------------------------------ |
@@ -62,6 +62,8 @@ graph TD
 ## PyAirbyte Data Pipelines 101
 
 In this first practical exercise you will build a minimal yet complete pipeline that streams Stripe data into a local DuckDB cache from inside a Google Colab notebook. The same code can later be pasted into a plain Python file and scheduled from GitHub Actions or any orchestrator.
+
+[Click here]([https://github.com/airbytehq/airbyte-academy](https://github.com/airbytehq/airbyte-academy/blob/main/notebooks/pyairbyte_fundamentals_course.ipynb)) to access to the Google Colab Notebook to help you follow the code
 
 ### Set up the environment
 
