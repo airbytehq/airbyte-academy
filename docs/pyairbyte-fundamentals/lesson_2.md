@@ -9,7 +9,7 @@ In short, PyAirbyte brings the Airbyte protocol to wherever Python runs—Jupyte
 - **Declarative** – the API mirrors the Airbyte Connector Spec.
 - **Composable** – mix‑and‑match caches, secret managers, and destinations.
 
-### 3.1 How it works How it works
+### How it works
 
 ```mermaid
 graph TD
@@ -25,7 +25,7 @@ graph TD
 - PyAirbyte writes them to a **cache** (Local DuckDB by default) or forwards them to a destination connector.
 - State messages are stored so that the next run fetches only new or updated records (incremental sync).
 
-### 3.2 Limitations
+### Limitations
 
 | **Feature**                | **PyAirbyte**                                          |
 | -------------------------- | ------------------------------------------------------ |

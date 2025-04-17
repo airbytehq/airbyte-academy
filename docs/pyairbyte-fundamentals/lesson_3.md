@@ -2,6 +2,8 @@
 
 In this first practical exercise you will build a minimal yet complete pipeline that streams Stripe data into a local DuckDB cache from inside a Google Colab notebook. The same code can later be pasted into a plain Python file and scheduled from GitHub Actions or any orchestrator.
 
+<a href="[https://github.com/airbytehq/airbyte-academy](https://github.com/airbytehq/airbyte-academy/blob/main/notebooks/pyairbyte_fundamentals_course.ipynb" target="_blank">Click here</a>) to access to the Google Colab Notebook to help you follow the code
+
 ### Set up the environment
 
 Create or open a new Colab notebook and install PyAirbyte:
