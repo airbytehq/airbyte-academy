@@ -1,3 +1,11 @@
+# PyAirbyte Fundamentals
+
+- [Lesson 1: Introduction](docs/pyairbyte-fundamentals/lesson_1.md)
+- [Lesson 2: What is PyAirbyte](docs/pyairbyte-fundamentals/lesson_2.md)
+- [Lesson 3: PyAirbyte Data Pipelines 101](docs/pyairbyte-fundamentals/lesson_3.md)
+- [Lesson 4: Durable Pipelines & Vector Destinations](docs/pyairbyte-fundamentals/lesson_4.md)
+- [Lesson 5: Next Steps](docs/pyairbyte-fundamentals/lesson_5.md)
+
 # Using Airbyte Platform APIs to Build Data Pipelines
 
 - [Lesson 1: Intro](docs/api-fundamentals/lesson_1.md)
